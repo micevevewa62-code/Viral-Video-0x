@@ -228,7 +228,7 @@
             color: #666;
         }
 
-        /* Category Buttons */
+        /* Category Buttons - UPDATED */
         .categories {
             max-width: 1400px;
             margin: 20px auto;
@@ -304,7 +304,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-            filter: blur(5px);
+            filter: blur(20px); /* Increased blur - image not recognizable */
         }
 
         .trending-card:hover .trending-image { transform: scale(1.05); }
@@ -408,7 +408,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-            filter: blur(5px);
+            filter: blur(20px); /* Increased blur - image not recognizable */
         }
 
         .movie-card:hover .movie-thumbnail img { transform: scale(1.1); }
@@ -586,7 +586,7 @@
             width: 100%;
             max-width: 350px;
             border-radius: 25px;
-            filter: blur(12px);
+            filter: blur(30px); /* Increased blur - image not recognizable */
             margin: 0 auto 30px;
             display: block;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
@@ -951,36 +951,33 @@
                 <span id="siteName">MovieFlex</span>
             </div>
             <div class="search-container">
-                <input type="text" class="search-input" id="searchInput" placeholder="সিনেমার নাম লিখুন...">
+                <input type="text" class="search-input" id="searchInput" placeholder="ভিডিওর নাম লিখুন...">
                 <i class="fas fa-search search-icon"></i>
                 <div class="search-suggestions" id="searchSuggestions"></div>
             </div>
         </div>
     </div>
 
-    <!-- Category Buttons -->
+    <!-- Category Buttons - UPDATED with new names -->
     <div class="categories">
         <div class="category-wrapper">
             <div class="category-btn active" data-category="all" onclick="filterMovies('all')">
                 <i class="fas fa-globe"></i> সবগুলো
             </div>
-            <div class="category-btn" data-category="hindi" onclick="filterMovies('hindi')">
-                <i class="fas fa-language"></i> হিন্দি
+            <div class="category-btn" data-category="trending" onclick="filterMovies('trending')">
+                <i class="fas fa-fire"></i> ট্রেন্ডিং ভিডিও
             </div>
-            <div class="category-btn" data-category="bangla" onclick="filterMovies('bangla')">
-                <i class="fas fa-book-open"></i> বাংলা
+            <div class="category-btn" data-category="russian" onclick="filterMovies('russian')">
+                <i class="fas fa-flag"></i> রাশিয়ান ভিডিও
             </div>
-            <div class="category-btn" data-category="indian" onclick="filterMovies('indian')">
-                <i class="fas fa-map"></i> ইন্ডিয়ান
+            <div class="category-btn" data-category="kids" onclick="filterMovies('kids')">
+                <i class="fas fa-child"></i> বাচ্চাদের ভিডিও
             </div>
-            <div class="category-btn" data-category="anime" onclick="filterMovies('anime')">
-                <i class="fas fa-dragon"></i> ফানি
+            <div class="category-btn" data-category="deshi" onclick="filterMovies('deshi')">
+                <i class="fas fa-home"></i> দেশী ভিডিও
             </div>
-            <div class="category-btn" data-category="action" onclick="filterMovies('action')">
-                <i class="fas fa-fist-raised"></i> অ্যাকশন
-            </div>
-            <div class="category-btn" data-category="natok" onclick="filterMovies('natok')">
-                <i class="fas fa-theater-masks"></i> নাটক
+            <div class="category-btn" data-category="celebrity" onclick="filterMovies('celebrity')">
+                <i class="fas fa-star"></i> সেলিব্রিটি ভিডিও
             </div>
             <div class="category-btn" data-category="favorites" onclick="showFavorites()">
                 <i class="fas fa-heart" style="color: #ff0000;"></i> পছন্দের তালিকা
@@ -991,20 +988,20 @@
     <!-- Trending Banner -->
     <div class="trending-banner">
         <div class="trending-card" onclick="handleMovieClick('trending')">
-            <img src="https://i.ibb.co.com/DfLzRDm0/article.jpg" alt="Trending Movie" class="trending-image" id="trendingImage">
+            <img src="https://i.ibb.co.com/DfLzRDm0/article.jpg" alt="Trending Video" class="trending-image" id="trendingImage">
         </div>
     </div>
 
     <!-- Trending Title -->
     <div class="trending-title-container">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং </span>
-        <h1 class="trending-title" id="trendingTitle">প্রিন্স মুভি ট্রেইলার - শাকিব খান</h1>
+        <h1 class="trending-title" id="trendingTitle">ট্রেন্ডিং ভিডিও - সবার সেরা</h1>
     </div>
 
     <!-- Movie Grid -->
     <div class="movie-section">
         <div class="section-header">
-            <h2 id="sectionTitle"><i class="fas fa-fire"></i> জনপ্রিয়</h2>
+            <h2 id="sectionTitle"><i class="fas fa-fire"></i> জনপ্রিয় ভিডিও</h2>
         </div>
         <div class="movie-grid" id="movieGrid"></div>
     </div>
@@ -1021,7 +1018,7 @@
                 <i class="fab fa-telegram-plane"></i>
             </div>
             <h3>টেলিগ্রাম চ্যানেলে জয়েন করুন</h3>
-            <p>সর্বশেষ মুভি আপডেট এবং এক্সক্লুসিভ কন্টেন্ট পেতে!</p>
+            <p>সর্বশেষ ভিডিও আপডেট এবং এক্সক্লুসিভ কন্টেন্ট পেতে!</p>
             <button class="telegram-join-btn" onclick="joinTelegram()">
                 <i class="fab fa-telegram-plane"></i> এখনই জয়েন করুন
             </button>
@@ -1065,7 +1062,7 @@
             <div class="back-btn" onclick="closePlayer()">
                 <i class="fas fa-arrow-left"></i>
             </div>
-            <h3 id="playerMovieTitle">সিনেমার নাম</h3>
+            <h3 id="playerMovieTitle">ভিডিওর নাম</h3>
         </div>
 
         <!-- Blur Image Container - No Video Player -->
@@ -1125,14 +1122,14 @@
             "https://omg10.com/4/9446627"
         ];
 
-        // ========== ট্রেন্ডিং মুভি ==========
+        // ========== ট্রেন্ডিং ভিডিও ==========
         const TRENDING_MOVIE = {
             id: "trending",
             title: "ফুল ভিডিও দেখুন",
             year: "2026",
             rating: "8.9",
             quality: "4K",
-            category: "bangla",
+            category: "trending",
             thumbnail: "https://i.ibb.co.com/Y493H5Px/l-MJXVq-DPf-E-HD.jpg",
             videoUrl: VIDEO_LINKS[0],
             downloadUrl: VIDEO_LINKS[1],
@@ -1140,18 +1137,18 @@
             description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও"
         };
 
-        // ========== মুভি ডাটাবেস ==========
+        // ========== ভিডিও ডাটাবেস - UPDATED with new categories ==========
         const MOVIES = [
-            { id: 1, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.7", quality: "4K", category: "hindi", thumbnail: "https://i.ibb.co.com/zT6prbgr/hq720-2.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 2, title: "ফুল ভিডিও দেখুন", year: "2007", rating: "8.5", quality: "HD", category: "hindi", thumbnail: "https://i.ibb.co.com/ycVqwszG/maxresdefault.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 3, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.8", quality: "4K", category: "hindi", thumbnail: "https://i.ibb.co.com/VWLCK140/hq720-3.jpg", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 4, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.7", quality: "4K", category: "bangla", thumbnail: "https://i.ibb.co.com/zhhDMP1x/hq720-1.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 5, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.5", quality: "4K", category: "bangla", thumbnail: "https://i.ibb.co.com/wFDTz88h/hq720-2.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 6, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.9", quality: "4K", category: "indian", thumbnail: "https://i.ibb.co.com/nM92hFBd/b45db5b37945baba53fd1120aed906c9.jpg", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 7, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.4", quality: "4K", category: "indian", thumbnail: "https://i.ibb.co.com/DgYYfjgd/35cfba583630c17d0f88b668bff8a9af.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 8, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.8", quality: "4K", category: "action", thumbnail: "https://i.ibb.co.com/YFDDKfg5/images-22.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 9, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.6", quality: "HD", category: "natok", thumbnail: "https://i.ibb.co.com/TX2JM1S/19.png", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
-            { id: 10, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.9", quality: "4K", category: "natok", thumbnail: "https://i.ibb.co.com/jkhcFHXB/maxresdefault-3.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" }
+            { id: 1, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.7", quality: "4K", category: "trending", thumbnail: "https://i.ibb.co.com/zT6prbgr/hq720-2.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 2, title: "ফুল ভিডিও দেখুন", year: "2007", rating: "8.5", quality: "HD", category: "russian", thumbnail: "https://i.ibb.co.com/ycVqwszG/maxresdefault.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 3, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.8", quality: "4K", category: "kids", thumbnail: "https://i.ibb.co.com/VWLCK140/hq720-3.jpg", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 4, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.7", quality: "4K", category: "deshi", thumbnail: "https://i.ibb.co.com/zhhDMP1x/hq720-1.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 5, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.5", quality: "4K", category: "celebrity", thumbnail: "https://i.ibb.co.com/wFDTz88h/hq720-2.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 6, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.9", quality: "4K", category: "trending", thumbnail: "https://i.ibb.co.com/nM92hFBd/b45db5b37945baba53fd1120aed906c9.jpg", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 7, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.4", quality: "4K", category: "russian", thumbnail: "https://i.ibb.co.com/DgYYfjgd/35cfba583630c17d0f88b668bff8a9af.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 8, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.8", quality: "4K", category: "kids", thumbnail: "https://i.ibb.co.com/YFDDKfg5/images-22.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 9, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.6", quality: "HD", category: "deshi", thumbnail: "https://i.ibb.co.com/TX2JM1S/19.png", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" },
+            { id: 10, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.9", quality: "4K", category: "celebrity", thumbnail: "https://i.ibb.co.com/jkhcFHXB/maxresdefault-3.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" }
         ];
 
         // ============================================
@@ -1265,7 +1262,7 @@
             const container = document.getElementById('searchSuggestions');
             
             if (results.length === 0) {
-                container.innerHTML = '<div class="no-suggestions">কোনো সিনেমা পাওয়া যায়নি</div>';
+                container.innerHTML = '<div class="no-suggestions">কোনো ভিডিও পাওয়া যায়নি</div>';
                 return;
             }
             
@@ -1304,7 +1301,7 @@
         }
 
         // ============================================
-        // মুভি দেখান
+        // ভিডিও দেখান
         // ============================================
         function displayMovies(movies) {
             const movieGrid = document.getElementById('movieGrid');
@@ -1339,24 +1336,23 @@
         }
 
         // ============================================
-        // মুভি ফিল্টার
+        // ভিডিও ফিল্টার - UPDATED with new categories
         // ============================================
         function loadMovies(category = 'all') {
             currentCategory = category;
             
             const sectionTitle = document.getElementById('sectionTitle');
             if (category === 'all') {
-                sectionTitle.innerHTML = '<i class="fas fa-fire"></i> জনপ্রিয়';
+                sectionTitle.innerHTML = '<i class="fas fa-fire"></i> জনপ্রিয় ভিডিও';
             } else {
                 const categoryNames = {
-                    hindi: 'হিন্দি সিনেমা',
-                    bangla: 'বাংলা সিনেমা',
-                    indian: 'ইন্ডিয়ান সিনেমা',
-                    anime: 'ফানি ভিডিও',
-                    action: 'অ্যাকশন সিনেমা',
-                    natok: 'নাটক'
+                    trending: 'ট্রেন্ডিং ভিডিও',
+                    russian: 'রাশিয়ান ভিডিও',
+                    kids: 'বাচ্চাদের ভিডিও',
+                    deshi: 'দেশী ভিডিও',
+                    celebrity: 'সেলিব্রিটি ভিডিও'
                 };
-                sectionTitle.innerHTML = `<i class="fas fa-film"></i> ${categoryNames[category] || 'সিনেমা'}`;
+                sectionTitle.innerHTML = `<i class="fas fa-film"></i> ${categoryNames[category] || 'ভিডিও'}`;
             }
             
             let filteredMovies = category === 'all' ? MOVIES : MOVIES.filter(m => m.category === category);
@@ -1373,7 +1369,7 @@
         }
 
         // ============================================
-        // মুভি ক্লিক হ্যান্ডলার
+        // ভিডিও ক্লিক হ্যান্ডলার
         // ============================================
         function handleMovieClick(movieId) {
             selectedMovie = movieId === "trending" ? TRENDING_MOVIE : MOVIES.find(m => m.id === movieId);
@@ -1456,7 +1452,7 @@
             if (downloadMode) {
                 adLink = AD_CONFIG.downloadAdLink;
             } else {
-                adLink = selectedMovie.videoUrl; // VIDEO_LINKS থেকে আসছে
+                adLink = selectedMovie.videoUrl;
             }
             
             adWindow = window.open(adLink, '_blank');
@@ -1603,7 +1599,7 @@
             `;
 
             document.getElementById('trendingImage').src = TRENDING_MOVIE.thumbnail;
-            document.getElementById('trendingTitle').textContent = TRENDING_MOVIE.title;
+            document.getElementById('trendingTitle').textContent = "ট্রেন্ডিং ভিডিও - সবার সেরা";
             
             loadMovies();
             setupBackButtonProtection();
@@ -1612,6 +1608,4 @@
         };
     </script>
 </body>
-</html>            
-                      
-                  
+</html>
