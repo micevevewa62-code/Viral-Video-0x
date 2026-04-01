@@ -1,37 +1,18 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-
-
-<script type="text/javascript">
-  setTimeout(function() {
-    window.location.href = "https://omg10.com/4/9429975"; // আপনার লিঙ্ক দিন
-  }, 15000); // ১০ সেকেন্ড (১০,০০০ মিলিসেকেন্ড)
-</script>
-
-<script type="text/javascript">
-  setTimeout(function() {
-    window.location.href = "https://omg10.com/4/9717825"; // আপনার লিঙ্ক দিন
-  }, 10000); // ১০ সেকেন্ড (১০,০০০ মিলিসেকেন্ড)
-</script>
-
-<script type="text/javascript">
-  setTimeout(function() {
-    window.location.href = "https://otieu.com/4/9446627"; // আপনার লিঙ্ক দিন
-  }, 20000); // ১০ সেকেন্ড (১০,০০০ মিলিসেকেন্ড)
-</script>
-
-
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MovieFlex - Viral Video Hub</title>
+    <title>MovieFlex - Watch & Earn</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Adsgram SDK -->
+    <script src="https://sad.adsgram.ai/js/sad.min.js" async></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,59 +22,6 @@
             background: #ffffff;
             color: #333333;
             line-height: 1.5;
-        }
-
-        /* Loading Overlay - for initial ad */
-        .initial-loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            backdrop-filter: blur(5px);
-            transition: opacity 0.5s ease;
-        }
-
-        .initial-loading.hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader-spinner {
-            width: 80px;
-            height: 80px;
-            border: 5px solid rgba(255,255,255,0.2);
-            border-top: 5px solid #ff0000;
-            border-right: 5px solid #0000ff;
-            border-bottom: 5px solid #ffff00;
-            border-radius: 50%;
-            animation: spin 1s linear infinite, borderGlow 2s infinite;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes borderGlow { 0% { box-shadow: 0 0 10px #ff0000; } 33% { box-shadow: 0 0 10px #0000ff; } 66% { box-shadow: 0 0 10px #ffff00; } 100% { box-shadow: 0 0 10px #ff0000; } }
-
-        .loading-text {
-            margin-top: 25px;
-            color: white;
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #ff0000, #0000ff, #ffff00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .loading-sub {
-            margin-top: 10px;
-            color: rgba(255,255,255,0.7);
-            font-size: 14px;
         }
 
         /* Top running bar */
@@ -155,12 +83,6 @@
             transition: all 0.3s ease;
         }
 
-        .logo img:hover {
-            transform: scale(1.1);
-            border-color: #0000ff;
-            box-shadow: 0 0 20px #ff0000;
-        }
-
         .logo span {
             font-size: 28px;
             font-weight: 800;
@@ -169,111 +91,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Search Bar */
-        .search-container {
-            position: relative;
-            width: 300px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 20px 12px 45px;
-            border: 2px solid rgba(0,0,0,0.1);
-            border-radius: 50px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #ff0000;
-            box-shadow: 0 0 15px rgba(255,0,0,0.3);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .search-input:focus + .search-icon {
-            color: #ff0000;
-        }
-
-        .search-suggestions {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-top: 10px;
-            max-height: 400px;
-            overflow-y: auto;
-            display: none;
-            z-index: 1000;
-        }
-
-        .search-suggestions.show {
-            display: block;
-        }
-
-        .suggestion-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .suggestion-item:hover {
-            background: rgba(255,0,0,0.1);
-            transform: translateX(5px);
-        }
-
-        .suggestion-item img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .suggestion-item .suggestion-info {
-            flex: 1;
-        }
-
-        .suggestion-item .suggestion-title {
-            font-weight: 600;
-            margin-bottom: 3px;
-            color: #333;
-        }
-
-        .suggestion-item .suggestion-meta {
-            font-size: 12px;
-            color: #ff0000;
-            font-weight: 500;
-        }
-
-        .suggestion-item .suggestion-category {
-            font-size: 11px;
-            color: #666;
-        }
-
-        .no-suggestions {
-            padding: 20px;
-            text-align: center;
-            color: #666;
-        }
-
-        /* Category Buttons */
+        /* Categories */
         .categories {
             max-width: 1400px;
             margin: 20px auto;
@@ -306,7 +124,6 @@
         }
 
         .category-btn:hover { transform: translateY(-2px); }
-
         .category-btn.active {
             background: linear-gradient(135deg, #ff0000, #0000ff, #ffff00);
             color: white;
@@ -341,7 +158,6 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-            filter: blur(20px);
         }
 
         .trending-card:hover .trending-image { transform: scale(1.05); }
@@ -367,14 +183,6 @@
             padding: 5px 15px;
             border-radius: 50px;
             font-size: 14px;
-            animation: threeColorGlow 3s infinite;
-        }
-
-        @keyframes threeColorGlow {
-            0% { box-shadow: 0 0 10px #ff0000; }
-            33% { box-shadow: 0 0 10px #0000ff; }
-            66% { box-shadow: 0 0 10px #ffff00; }
-            100% { box-shadow: 0 0 10px #ff0000; }
         }
 
         /* Movie Grid */
@@ -395,9 +203,6 @@
             font-size: 24px;
             font-weight: 700;
             color: #333;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .movie-grid {
@@ -413,57 +218,29 @@
             .movie-grid { grid-template-columns: repeat(5, 1fr); }
         }
 
+        /* Movie Card */
         .movie-card {
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s ease;
             background: white;
-            border: 4px solid transparent;
-            animation: threeColorBorder 3s infinite;
+            border: 2px solid #eee;
+            transition: transform 0.3s;
         }
-
-        .movie-card:hover {
-            transform: translateY(-5px);
-        }
+        .movie-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 
         .movie-thumbnail {
             position: relative;
             aspect-ratio: 16/9;
             overflow: hidden;
         }
-
         .movie-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-            filter: blur(20px);
         }
-
-        .movie-card:hover .movie-thumbnail img { transform: scale(1.1); }
-
-        .movie-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: 0.3s;
-        }
-
-        .movie-card:hover .movie-overlay { opacity: 1; }
-
-        .movie-overlay i {
-            font-size: 50px;
-            color: white;
-        }
+        .movie-card:hover .movie-thumbnail img { transform: scale(1.05); }
 
         .movie-quality {
             position: absolute;
@@ -478,55 +255,97 @@
         }
 
         .movie-info {
-            padding: 15px;
+            padding: 12px;
             background: white;
             position: relative;
         }
-
         .movie-title {
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             margin-bottom: 8px;
             color: #333;
-            padding-right: 35px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .movie-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: #666;
-            font-size: 13px;
-            gap: 10px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        /* WATCH BUTTON */
+        .watch-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .watch-btn i { font-size: 14px; }
+        .watch-btn:hover {
+            background: linear-gradient(135deg, #cc0000, #aa0000);
+            transform: scale(1.02);
+        }
+        .watch-btn.locked {
+            background: linear-gradient(135deg, #888, #666);
+            cursor: pointer;
+            opacity: 0.8;
+        }
+        .watch-btn.locked:hover { transform: scale(1.02); background: linear-gradient(135deg, #777, #555);}
+        .watch-btn.unlocked {
+            background: linear-gradient(135deg, #00aa55, #008844);
+            animation: pulseGreen 0.5s ease;
+        }
+        @keyframes pulseGreen {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
         }
 
         .like-btn {
             position: absolute;
-            bottom: 15px;
-            right: 15px;
-            width: 35px;
-            height: 35px;
+            bottom: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: white;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             border: 2px solid #ff0000;
             color: #ff0000;
             z-index: 3;
         }
-
         .like-btn.active {
             background: #ff0000;
             color: white;
         }
 
-        /* Player Section */
+        .lock-info {
+            font-size: 11px;
+            color: #ff6600;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        /* Player Section - Clear Image */
         .player-section {
             position: fixed;
             top: 0;
@@ -538,7 +357,6 @@
             overflow-y: auto;
             display: none;
         }
-
         .player-section.active { display: block; }
 
         .player-header {
@@ -553,7 +371,6 @@
             z-index: 10;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
         .back-btn {
             width: 45px;
             height: 45px;
@@ -565,61 +382,47 @@
             cursor: pointer;
             transition: 0.3s;
         }
+        .back-btn:hover { background: #ddd; }
 
-        .blur-container {
+        .clear-container {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
             min-height: 400px;
-            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            background: #f8f9fa;
             padding: 30px 20px;
         }
-
-        .blur-content {
+        .clear-content {
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
         }
-
-        .blur-image {
+        .clear-image {
             width: 100%;
-            max-width: 350px;
-            border-radius: 25px;
-            filter: blur(30px);
-            margin: 0 auto 30px;
+            max-width: 400px;
+            border-radius: 20px;
+            margin: 0 auto 25px;
             display: block;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             border: 4px solid white;
         }
-
         .watch-now-btn {
             background: linear-gradient(135deg, #ff0000, #0000ff, #ffff00);
             color: white;
             border: none;
-            padding: 20px 60px;
+            padding: 16px 50px;
             border-radius: 60px;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 800;
             cursor: pointer;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255,0,0,0.4);
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .movie-actions {
-            max-width: 800px;
-            margin: 30px auto;
-            padding: 30px;
-            text-align: center;
-        }
+        .watch-now-btn:hover { transform: scale(1.05); }
 
         .action-buttons {
             display: flex;
@@ -628,30 +431,25 @@
             flex-wrap: wrap;
             margin-top: 25px;
         }
-
         .premium-btn {
-            padding: 15px 40px;
+            padding: 12px 35px;
             border-radius: 50px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             text-decoration: none;
             color: white;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             transition: 0.3s;
             cursor: pointer;
             border: none;
         }
+        .premium-btn.download { background: linear-gradient(135deg, #ff0000, #0000ff); }
+        .premium-btn.live { background: linear-gradient(135deg, #0000ff, #ffff00); }
+        .premium-btn:hover { transform: scale(1.05); }
 
-        .premium-btn.download {
-            background: linear-gradient(135deg, #ff0000, #0000ff);
-        }
-
-        .premium-btn.live {
-            background: linear-gradient(135deg, #0000ff, #ffff00);
-        }
-
+        /* Telegram Button */
         .telegram-btn {
             position: fixed;
             bottom: 30px;
@@ -666,19 +464,22 @@
             align-items: center;
             justify-content: center;
             font-size: 30px;
-            box-shadow: 0 5px 20px rgba(0,136,204,0.4);
             cursor: pointer;
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,136,204,0.4);
         }
 
-        .telegram-modal, .ad-modal {
+        /* Ad Modals - Hidden now, direct redirect without notification */
+        .ad-modal, .monetag-modal {
+            display: none;
+        }
+
+        .telegram-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -687,72 +488,39 @@
             visibility: hidden;
             transition: 0.3s;
         }
-
-        .telegram-modal.show, .ad-modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .telegram-modal-content, .ad-modal-content {
+        .telegram-modal.show { opacity: 1; visibility: visible; }
+        .telegram-modal-content {
             background: white;
-            border-radius: 40px;
-            padding: 40px;
-            max-width: 400px;
-            width: 90%;
+            border-radius: 30px;
+            padding: 30px;
             text-align: center;
-            transform: scale(0.8);
-            transition: 0.3s;
+            max-width: 350px;
         }
-
-        .telegram-modal.show .telegram-modal-content,
-        .ad-modal.show .ad-modal-content {
-            transform: scale(1);
-        }
-
-        .ad-skip-btn {
-            background: linear-gradient(135deg, #ff0000, #0000ff, #ffff00);
+        .telegram-join-btn {
+            background: #0088cc;
             color: white;
+            padding: 12px 30px;
             border: none;
-            padding: 15px 40px;
             border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
+            margin-top: 15px;
             cursor: pointer;
-            margin-top: 20px;
-            opacity: 0.5;
-            pointer-events: none;
+            font-size: 16px;
         }
-
-        .ad-skip-btn.active {
-            opacity: 1;
-            pointer-events: auto;
+        .telegram-close {
+            margin-top: 15px;
+            cursor: pointer;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <!-- Initial Loading Overlay (Auto Ad will show after page load) -->
-    <div class="initial-loading" id="initialLoading">
-        <div class="loader-spinner"></div>
-        <div class="loading-text">📺 চলছে প্রস্তুতি...</div>
-        <div class="loading-sub">বিজ্ঞাপন লোড হচ্ছে, দয়া করে অপেক্ষা করুন</div>
-    </div>
-
-    <div class="top-bar">
-        <div class="top-bar-content">
-            <i class="fas fa-film"></i> ওয়াচ করুন আর ডাউনলোড করুন ফ্রিতে। শুধু ১০ সেকেন্ডের একটি এড দেখুন। <i class="fas fa-clock"></i> ১০ সেকেন্ড <i class="fas fa-download"></i>
-        </div>
-    </div>
+    <div class="top-bar"><div class="top-bar-content"><i class="fas fa-film"></i> ওয়াচ করুন আর ডাউনলোড করুন ফ্রিতে। প্রতিটি ভিডিও আনলক করতে ২টি এড দেখুন। <i class="fas fa-clock"></i> ২টি এড <i class="fas fa-unlock-alt"></i></div></div>
 
     <div class="header">
         <div class="header-content">
             <div class="logo">
                 <img src="https://i.ibb.co.com/Ng7dVv2v/IMG-20260311-190406-589.jpg" alt="Logo">
-                <span id="siteName">Video Hub</span>
-            </div>
-            <div class="search-container">
-                <input type="text" class="search-input" id="searchInput" placeholder="ভিডিওর নাম লিখুন...">
-                <i class="fas fa-search search-icon"></i>
-                <div class="search-suggestions" id="searchSuggestions"></div>
+                <span>Video Hub</span>
             </div>
         </div>
     </div>
@@ -765,55 +533,46 @@
             <div class="category-btn" data-category="kids" onclick="filterMovies('kids')"><i class="fas fa-child"></i> বাচ্চাদের</div>
             <div class="category-btn" data-category="deshi" onclick="filterMovies('deshi')"><i class="fas fa-home"></i> দেশী</div>
             <div class="category-btn" data-category="celebrity" onclick="filterMovies('celebrity')"><i class="fas fa-star"></i> সেলিব্রিটি</div>
-            <div class="category-btn" data-category="favorites" onclick="showFavorites()"><i class="fas fa-heart" style="color: #ff0000;"></i> পছন্দের</div>
+            <div class="category-btn" data-category="favorites" onclick="showFavorites()"><i class="fas fa-heart" style="color:#ff0000;"></i> পছন্দের</div>
         </div>
     </div>
 
+    <!-- Trending Banner -->
     <div class="trending-banner">
         <div class="trending-card" id="trendingCard">
-            <img src="https://i.ibb.co.com/DfLzRDm0/article.jpg" alt="Trending" class="trending-image" id="trendingImage">
+            <img src="https://i.ibb.co.com/DfLzRDm0/article.jpg" class="trending-image" id="trendingImage">
         </div>
     </div>
-
     <div class="trending-title-container">
         <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং</span>
         <h1 class="trending-title">ট্রেন্ডিং ভিডিও - সবার সেরা</h1>
     </div>
 
+    <!-- Movie Grid - Will show exactly 6 videos below trending -->
     <div class="movie-section">
-        <div class="section-header">
-            <h2 id="sectionTitle"><i class="fas fa-fire"></i> জনপ্রিয় ভিডিও</h2>
-        </div>
+        <div class="section-header"><h2 id="sectionTitle"><i class="fas fa-fire"></i> জনপ্রিয় ভিডিও</h2></div>
         <div class="movie-grid" id="movieGrid"></div>
     </div>
 
     <div class="telegram-btn" onclick="showTelegramModal()"><i class="fab fa-telegram-plane"></i></div>
-
+    
+    <!-- Telegram Modal -->
     <div class="telegram-modal" id="telegramModal">
         <div class="telegram-modal-content">
-            <div class="telegram-modal-icon"><i class="fab fa-telegram-plane"></i></div>
-            <h3>টেলিগ্রাম চ্যানেলে জয়েন করুন</h3>
-            <p>সর্বশেষ ভিডিও আপডেট এবং এক্সক্লুসিভ কন্টেন্ট পেতে!</p>
-            <button class="telegram-join-btn" onclick="joinTelegram()"><i class="fab fa-telegram-plane"></i> এখনই জয়েন করুন</button>
+            <i class="fab fa-telegram-plane" style="font-size:50px; color:#0088cc;"></i>
+            <h3>টেলিগ্রাম জয়েন করুন</h3>
+            <button class="telegram-join-btn" onclick="window.open('https://t.me/+FPnVaHrhRbY3NjI9','_blank');closeTelegramModal()">জয়েন করুন</button>
             <div class="telegram-close" onclick="closeTelegramModal()">পরে দেখব</div>
         </div>
     </div>
 
-    <div class="ad-modal" id="adModal">
-        <div class="ad-modal-content">
-            <div class="ad-timer-circle"><svg width="120" height="120"><circle cx="60" cy="60" r="50" fill="none" stroke="#e0e0e0" stroke-width="8"/><circle id="adProgress" cx="60" cy="60" r="50" fill="none" stroke="#ff0000" stroke-width="8" stroke-dasharray="314" stroke-dashoffset="0"/></svg><div id="adTimer" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:48px; font-weight:800;">10</div></div>
-            <h3><i class="fas fa-ad"></i> বিজ্ঞাপন</h3>
-            <p id="adMessage">বিজ্ঞাপন চলছে...</p>
-            <button class="ad-skip-btn" id="skipAdBtn" onclick="skipAd()">স্কিপ করুন</button>
-        </div>
-    </div>
-
+    <!-- Player Section -->
     <div class="player-section" id="playerSection">
         <div class="player-header">
             <div class="back-btn" onclick="closePlayer()"><i class="fas fa-arrow-left"></i></div>
-            <h3 id="playerMovieTitle">ভিডিওর নাম</h3>
+            <h3 id="playerMovieTitle">ভিডিও</h3>
         </div>
-        <div class="blur-container" id="blurContainer"></div>
+        <div class="clear-container" id="clearContainer"></div>
         <div class="movie-actions">
             <h2 id="playerTitle"></h2>
             <p id="playerDesc"></p>
@@ -824,208 +583,285 @@
         </div>
     </div>
 
-    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
     <script>
         // ========== CONFIG ==========
         const VIDEO_LINKS = ["https://omg10.com/4/9717825", "https://omg10.com/4/9429975", "https://omg10.com/4/9446627"];
-        const TELEGRAM_LINK = "https://t.me/+FPnVaHrhRbY3NjI9";
+        const MONETAG_LINKS = ["https://omg10.com/4/9717825", "https://omg10.com/4/9429975"];
         
-        const TRENDING_MOVIE = {
-            id: "trending", title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.9", quality: "4K", category: "trending",
-            thumbnail: "https://i.ibb.co.com/Y493H5Px/l-MJXVq-DPf-E-HD.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও"
+        const TRENDING_MOVIE = { 
+            id: "trending", 
+            title: "ফুল ভিডিও দেখুন", 
+            year: "2026", 
+            rating: "8.9", 
+            quality: "4K", 
+            category: "trending", 
+            thumbnail: "https://i.ibb.co.com/Xxcq8kxx/1774974824128.jpg", 
+            videoUrl: VIDEO_LINKS[0], 
+            downloadUrl: VIDEO_LINKS[1], 
+            liveUrl: VIDEO_LINKS[2], 
+            description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" 
         };
         
+        // Exactly 6 movies for the grid below trending
         const MOVIES = [
-            { id: 1, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.7", quality: "4K", category: "trending", thumbnail: "https://i.ibb.co.com/zT6prbgr/hq720-2.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি" },
-            { id: 2, title: "ফুল ভিডিও দেখুন", year: "2007", rating: "8.5", quality: "HD", category: "russian", thumbnail: "https://i.ibb.co.com/ycVqwszG/maxresdefault.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "অস্থির ছিল ভিডিওটি" },
-            { id: 3, title: "ফুল ভিডিও দেখুন", year: "2026", rating: "8.8", quality: "4K", category: "kids", thumbnail: "https://i.ibb.co.com/VWLCK140/hq720-3.jpg", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "অস্থির ছিল ভিডিওটি" },
-            { id: 4, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.7", quality: "4K", category: "deshi", thumbnail: "https://i.ibb.co.com/zhhDMP1x/hq720-1.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "অস্থির ছিল ভিডিওটি" },
-            { id: 5, title: "ফুল ভিডিও দেখুন", year: "2025", rating: "8.5", quality: "4K", category: "celebrity", thumbnail: "https://i.ibb.co.com/wFDTz88h/hq720-2.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "অস্থির ছিল ভিডিওটি" }
+            { id: 1, title: "ট্রেন্ডিং ভিডিও ১", year: "2026", rating: "8.7", quality: "4K", category: "trending", thumbnail: "https://i.ibb.co.com/kr3rBRR/IMG-20260330-213725-843.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "সেরা ট্রেন্ডিং কন্টেন্ট" },
+            { id: 2, title: "রাশিয়ান ভিডিও", year: "2025", rating: "8.5", quality: "HD", category: "russian", thumbnail: "https://i.ibb.co.com/1Ybszq1Q/IMG-20260114-223941-811.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "রাশিয়ান ডাবbed ভিডিও" },
+            { id: 3, title: "বাচ্চাদের গল্প", year: "2026", rating: "8.8", quality: "4K", category: "kids", thumbnail: "https://i.ibb.co.com/bgfx42jz/a4d72eae030ff34d4f1bdcd96293b6aa.webp", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "মজার শিক্ষামূলক ভিডিও" },
+            { id: 4, title: "দেশী ধামাকা", year: "2025", rating: "8.6", quality: "4K", category: "deshi", thumbnail: "https://i.ibb.co.com/JRgTWNVn/6bc86af78a761de48fde600585bdbdf8.webp", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "বাংলাদেশি ভিডিও" },
+            { id: 5, title: "সেলিব্রিটি স্পেশাল", year: "2025", rating: "8.9", quality: "4K", category: "celebrity", thumbnail: "https://i.ibb.co.com/TqMDrv1t/FB-IMG-1763524521416.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "তারকাদের ভিডিও" },
+            { id: 6, title: "এক্সক্লুসিভ ক্লিপ", year: "2026", rating: "8.4", quality: "HD", category: "trending", thumbnail: "https://i.ibb.co.com/N2BXSPZh/FB-IMG-1763523970379.jpg", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "ভাইরাল ক্লিপ" }
         ];
         
-        let selectedMovie = null, downloadMode = false, adTimerInterval = null, canSkip = false, timeLeft = 10, adWindow = null;
-        let initialAdCompleted = false;
+        // unlock tracking
+        let unlockStatus = new Map();
+        MOVIES.forEach(m => unlockStatus.set(m.id, { ad1Done: false, ad2Done: false }));
+        unlockStatus.set("trending", { ad1Done: false, ad2Done: false });
         
-        // Adsgram Auto Show on Page Load
-        function showInitialAutoAd() {
-            if (typeof Adsgram !== 'undefined') {
-                Adsgram.init({ blockId: "int-25418" }).show()
-                    .then(() => {
-                        console.log("✅ Initial auto ad completed");
-                        initialAdCompleted = true;
-                        document.getElementById('initialLoading').classList.add('hide');
-                        setTimeout(() => {
-                            document.getElementById('initialLoading').style.display = 'none';
-                        }, 500);
-                        loadMovies(); // Load all content after ad
-                        setupSearch();
-                        setupBackButtonProtection();
-                        updateLikeButtons();
-                    })
-                    .catch(error => {
-                        console.log("⛔ Initial ad error:", error);
-                        initialAdCompleted = true;
-                        document.getElementById('initialLoading').classList.add('hide');
-                        setTimeout(() => {
-                            document.getElementById('initialLoading').style.display = 'none';
-                        }, 500);
-                        loadMovies();
-                        setupSearch();
-                        setupBackButtonProtection();
-                        updateLikeButtons();
-                    });
-            } else {
-                console.log("Adsgram not loaded, skipping auto ad");
-                initialAdCompleted = true;
-                document.getElementById('initialLoading').classList.add('hide');
-                setTimeout(() => {
-                    document.getElementById('initialLoading').style.display = 'none';
-                }, 500);
-                loadMovies();
-                setupSearch();
-                setupBackButtonProtection();
-                updateLikeButtons();
-            }
-        }
+        let currentPendingMovie = null;
+        let monetagWindow = null;
+        let monetagCloseTimer = null;
         
-        // Existing functions
-        function getFavorites() { return JSON.parse(localStorage.getItem('movieFavorites') || '[]'); }
-        function saveFavorites(fav) { localStorage.setItem('movieFavorites', JSON.stringify(fav)); }
-        function isFavorite(id) { return getFavorites().includes(id); }
-        function toggleFavorite(movieId) {
-            let fav = getFavorites();
-            let idx = fav.indexOf(movieId);
-            if(idx === -1) fav.push(movieId); else fav.splice(idx,1);
-            saveFavorites(fav);
-            updateLikeButtons();
-            if(currentCategory === 'favorites') showFavorites();
-        }
-        function updateLikeButtons() {
-            document.querySelectorAll('.like-btn').forEach(btn => {
-                let mid = parseInt(btn.dataset.id);
-                if(isFavorite(mid)) { btn.classList.add('active'); btn.innerHTML = '<i class="fas fa-heart"></i>'; }
-                else { btn.classList.remove('active'); btn.innerHTML = '<i class="far fa-heart"></i>'; }
-            });
+        function isMovieUnlocked(movieId) {
+            let status = unlockStatus.get(movieId);
+            return status && status.ad1Done && status.ad2Done;
         }
         
         function displayMovies(movies) {
+            const grid = document.getElementById('movieGrid');
             let html = '';
-            movies.forEach(m => {
-                html += `<div class="movie-card" onclick="handleMovieClick(${m.id})"><div class="movie-thumbnail"><img src="${m.thumbnail}"><span class="movie-quality">${m.quality}</span><div class="movie-overlay"><i class="fas fa-play-circle"></i></div></div><div class="movie-info"><div class="movie-title">${m.title}</div><div class="movie-meta"><span>${m.year}</span><span><i class="fas fa-star"></i> ${m.rating}</span></div><div class="like-btn ${isFavorite(m.id) ? 'active' : ''}" data-id="${m.id}" onclick="event.stopPropagation(); toggleFavorite(${m.id})"><i class="${isFavorite(m.id) ? 'fas' : 'far'} fa-heart"></i></div></div></div>`;
+            movies.forEach(movie => {
+                const unlocked = isMovieUnlocked(movie.id);
+                const isFav = getFavorites().includes(movie.id);
+                html += `
+                    <div class="movie-card">
+                        <div class="movie-thumbnail">
+                            <img src="${movie.thumbnail}" alt="${movie.title}">
+                            <span class="movie-quality">${movie.quality}</span>
+                        </div>
+                        <div class="movie-info">
+                            <div class="movie-title">${movie.title}</div>
+                            <div class="movie-meta"><span>${movie.year}</span><span><i class="fas fa-star"></i> ${movie.rating}</span></div>
+                            <button class="watch-btn ${unlocked ? 'unlocked' : 'locked'}" data-id="${movie.id}" onclick="event.stopPropagation(); initiateUnlock(${movie.id})">
+                                <i class="fas ${unlocked ? 'fa-play-circle' : 'fa-lock'}"></i> ${unlocked ? 'ভিডিও দেখুন' : 'আনলক করতে ২টি এড দেখুন'}
+                            </button>
+                            ${!unlocked ? '<div class="lock-info"><i class="fas fa-info-circle"></i> ২টি এড দেখে আনলক করুন</div>' : ''}
+                        </div>
+                        <div class="like-btn ${isFav ? 'active' : ''}" data-id="${movie.id}" onclick="event.stopPropagation(); toggleFavorite(${movie.id})">
+                            <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+                        </div>
+                    </div>
+                `;
             });
-            document.getElementById('movieGrid').innerHTML = html;
+            grid.innerHTML = html;
         }
         
-        let currentCategory = 'all';
-        function loadMovies(cat = 'all') {
-            currentCategory = cat;
-            let filtered = cat === 'all' ? MOVIES : MOVIES.filter(m => m.category === cat);
-            displayMovies(filtered);
+        // UNLOCK SEQUENCE: 2 ads - DIRECT, NO NOTIFICATION MODAL
+        function initiateUnlock(movieId) {
+            if (isMovieUnlocked(movieId)) {
+                let movie = MOVIES.find(m => m.id === movieId);
+                if (!movie && movieId === "trending") movie = TRENDING_MOVIE;
+                if (movie) openPlayerDirect(movie);
+                return;
+            }
+            
+            currentPendingMovie = MOVIES.find(m => m.id === movieId);
+            if (!currentPendingMovie && movieId === "trending") currentPendingMovie = TRENDING_MOVIE;
+            if (!currentPendingMovie) return;
+            
+            // Start first ad: Adsgram (direct, no popup notification)
+            startAdsgramDirect();
         }
-        function filterMovies(cat) {
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.category-btn[data-category="${cat}"]`).classList.add('active');
-            loadMovies(cat);
+        
+        function startAdsgramDirect() {
+            // Directly show Adsgram ad - no visible modal
+            if (typeof Adsgram !== 'undefined') {
+                Adsgram.init({ blockId: "int-25418" }).show()
+                    .then(() => {
+                        // Adsgram completed, now mark ad1 done and proceed to Monetag
+                        if (currentPendingMovie) {
+                            let status = unlockStatus.get(currentPendingMovie.id);
+                            if (status) {
+                                status.ad1Done = true;
+                                unlockStatus.set(currentPendingMovie.id, status);
+                            }
+                        }
+                        startMonetagDirect();
+                    })
+                    .catch(err => {
+                        console.log("Adsgram error, still proceed to Monetag", err);
+                        if (currentPendingMovie) {
+                            let status = unlockStatus.get(currentPendingMovie.id);
+                            if (status) status.ad1Done = true;
+                            unlockStatus.set(currentPendingMovie.id, status);
+                        }
+                        startMonetagDirect();
+                    });
+            } else {
+                // fallback
+                if (currentPendingMovie) {
+                    let status = unlockStatus.get(currentPendingMovie.id);
+                    if (status) status.ad1Done = true;
+                    unlockStatus.set(currentPendingMovie.id, status);
+                }
+                startMonetagDirect();
+            }
+        }
+        
+        function startMonetagDirect() {
+            // Open Monetag link directly in new tab, auto close after 10 seconds
+            const link = MONETAG_LINKS[Math.floor(Math.random() * MONETAG_LINKS.length)];
+            monetagWindow = window.open(link, '_blank');
+            
+            // Set timer to auto close after 10 seconds and complete ad2
+            if (monetagCloseTimer) clearTimeout(monetagCloseTimer);
+            monetagCloseTimer = setTimeout(() => {
+                if (monetagWindow && !monetagWindow.closed) {
+                    monetagWindow.close();
+                }
+                // Mark ad2 done
+                if (currentPendingMovie) {
+                    let status = unlockStatus.get(currentPendingMovie.id);
+                    if (status) {
+                        status.ad2Done = true;
+                        unlockStatus.set(currentPendingMovie.id, status);
+                    }
+                    // Check both done
+                    let finalStatus = unlockStatus.get(currentPendingMovie.id);
+                    if (finalStatus.ad1Done && finalStatus.ad2Done) {
+                        // Auto refresh UI and open player
+                        refreshAllMoviesUI();
+                        openPlayerDirect(currentPendingMovie);
+                    } else {
+                        // safety
+                        finalStatus.ad2Done = true;
+                        unlockStatus.set(currentPendingMovie.id, finalStatus);
+                        refreshAllMoviesUI();
+                        openPlayerDirect(currentPendingMovie);
+                    }
+                }
+                monetagWindow = null;
+            }, 10000); // 10 seconds
+        }
+        
+        function refreshAllMoviesUI() {
+            if (currentCategory === 'favorites') showFavorites();
+            else loadMovies(currentCategory);
+            updateTrendingButton();
+        }
+        
+        function updateTrendingButton() {
+            const trendingCard = document.getElementById('trendingCard');
+            const unlocked = isMovieUnlocked('trending');
+            trendingCard.style.cursor = 'pointer';
+            trendingCard.onclick = () => {
+                if (unlocked) openPlayerDirect(TRENDING_MOVIE);
+                else initiateUnlock('trending');
+            };
+        }
+        
+        function openPlayerDirect(movie) {
+            const playerSection = document.getElementById('playerSection');
+            const clearContainer = document.getElementById('clearContainer');
+            const playerTitle = document.getElementById('playerTitle');
+            const playerDesc = document.getElementById('playerDesc');
+            const playerMovieTitle = document.getElementById('playerMovieTitle');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const watchLiveBtn = document.getElementById('watchLiveBtn');
+            
+            playerTitle.textContent = movie.title;
+            playerDesc.textContent = movie.description;
+            playerMovieTitle.textContent = movie.title;
+            
+            // Clear image - NO BLUR
+            clearContainer.innerHTML = `
+                <div class="clear-content">
+                    <img src="${movie.thumbnail}" alt="${movie.title}" class="clear-image">
+                    <button class="watch-now-btn" onclick="window.open('${movie.liveUrl}', '_blank')">
+                        <i class="fas fa-play"></i> এখনই দেখুন
+                    </button>
+                    <p style="margin-top:20px; color:#666;">※ ভিডিও দেখতে উপরের বাটনে ক্লিক করুন</p>
+                </div>
+            `;
+            
+            downloadBtn.onclick = (e) => {
+                e.preventDefault();
+                window.open(movie.downloadUrl, '_blank');
+            };
+            watchLiveBtn.href = movie.liveUrl;
+            
+            playerSection.classList.add('active');
+        }
+        
+        function closePlayer() {
+            document.getElementById('playerSection').classList.remove('active');
+        }
+        
+        // Favorites
+        function getFavorites() { 
+            let f = localStorage.getItem('movieFavorites'); 
+            return f ? JSON.parse(f) : []; 
+        }
+        function saveFavorites(favs) { 
+            localStorage.setItem('movieFavorites', JSON.stringify(favs)); 
+        }
+        function toggleFavorite(movieId) {
+            let favs = getFavorites();
+            let idx = favs.indexOf(movieId);
+            if (idx === -1) favs.push(movieId);
+            else favs.splice(idx,1);
+            saveFavorites(favs);
+            if (currentCategory === 'favorites') showFavorites();
+            else loadMovies(currentCategory);
         }
         function showFavorites() {
-            let favIds = getFavorites();
-            let favMovies = MOVIES.filter(m => favIds.includes(m.id));
+            currentCategory = 'favorites';
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-category="favorites"]')?.classList.add('active');
+            let favs = getFavorites();
+            let favMovies = MOVIES.filter(m => favs.includes(m.id));
             document.getElementById('sectionTitle').innerHTML = '<i class="fas fa-heart"></i> আমার পছন্দের তালিকা';
             displayMovies(favMovies);
         }
         
-        function handleMovieClick(movieId) {
-            if(!initialAdCompleted) { alert("দয়া করে অপেক্ষা করুন, পৃষ্ঠা লোড হচ্ছে..."); return; }
-            selectedMovie = movieId === "trending" ? TRENDING_MOVIE : MOVIES.find(m => m.id === movieId);
-            downloadMode = false;
-            showAdsgramAdThenAction();
+        let currentCategory = 'all';
+        function loadMovies(category = 'all') {
+            currentCategory = category;
+            let filtered = category === 'all' ? MOVIES : MOVIES.filter(m => m.category === category);
+            document.getElementById('sectionTitle').innerHTML = `<i class="fas fa-film"></i> ${category === 'all' ? 'জনপ্রিয় ভিডিও' : category} ভিডিও`;
+            displayMovies(filtered);
+        }
+        function filterMovies(cat) { 
+            currentCategory = cat; 
+            loadMovies(cat); 
         }
         
-        function handleDownloadClick(movie) {
-            selectedMovie = movie;
-            downloadMode = true;
-            showAdsgramAdThenAction();
+        function showTelegramModal() { 
+            document.getElementById('telegramModal').classList.add('show'); 
+        }
+        function closeTelegramModal() { 
+            document.getElementById('telegramModal').classList.remove('show'); 
         }
         
-        function showAdsgramAdThenAction() {
-            if (typeof Adsgram !== 'undefined') {
-                Adsgram.init({ blockId: "int-25418" }).show()
-                    .then(() => {
-                        console.log("✅ Ad shown for action");
-                        if(downloadMode) {
-                            if(TELEGRAM_LINK) window.open(TELEGRAM_LINK, '_blank');
-                            else window.open(selectedMovie.downloadUrl, '_blank');
-                        } else {
-                            openPlayer();
-                        }
-                    })
-                    .catch(error => {
-                        console.log("Ad error, fallback");
-                        if(downloadMode) {
-                            if(TELEGRAM_LINK) window.open(TELEGRAM_LINK, '_blank');
-                            else window.open(selectedMovie.downloadUrl, '_blank');
-                        } else {
-                            openPlayer();
-                        }
-                    });
-            } else {
-                if(downloadMode) window.open(selectedMovie.downloadUrl, '_blank');
-                else openPlayer();
-            }
-        }
-        
-        function openPlayer() {
-            const playerSection = document.getElementById('playerSection');
-            document.getElementById('blurContainer').innerHTML = `<div class="blur-content"><img src="${selectedMovie.thumbnail}" class="blur-image"><button class="watch-now-btn" onclick="window.open('${selectedMovie.liveUrl}', '_blank')"><i class="fas fa-play"></i> এখনই দেখুন</button></div>`;
-            document.getElementById('playerTitle').textContent = selectedMovie.title;
-            document.getElementById('playerDesc').textContent = selectedMovie.description;
-            document.getElementById('playerMovieTitle').textContent = selectedMovie.title;
-            document.getElementById('downloadBtn').onclick = (e) => { e.preventDefault(); handleDownloadClick(selectedMovie); };
-            document.getElementById('watchLiveBtn').href = selectedMovie.liveUrl;
-            playerSection.classList.add('active');
-        }
-        
-        function closePlayer() { document.getElementById('playerSection').classList.remove('active'); }
-        
-        function setupSearch() {
-            const input = document.getElementById('searchInput');
-            const sugg = document.getElementById('searchSuggestions');
-            input.addEventListener('input', function() {
-                let q = this.value.toLowerCase().trim();
-                if(q.length === 0) { sugg.classList.remove('show'); return; }
-                let results = MOVIES.filter(m => m.title.toLowerCase().includes(q));
-                if(results.length === 0) sugg.innerHTML = '<div class="no-suggestions">কোনো ভিডিও পাওয়া যায়নি</div>';
-                else {
-                    let html = '';
-                    results.slice(0,5).forEach(m => {
-                        html += `<div class="suggestion-item" onclick="handleMovieClick(${m.id})"><img src="${m.thumbnail}"><div class="suggestion-info"><div class="suggestion-title">${m.title}</div><div class="suggestion-meta">${m.year} • ${m.quality}</div></div></div>`;
-                    });
-                    sugg.innerHTML = html;
-                }
-                sugg.classList.add('show');
-            });
-            document.addEventListener('click', e => { if(!input.contains(e.target) && !sugg.contains(e.target)) sugg.classList.remove('show'); });
-        }
-        
-        function setupBackButtonProtection() {
-            history.pushState(null, null, location.href);
-            window.addEventListener('popstate', function() {
-                if(confirm("⚠️ আপনি কি নিশ্চিতভাবে পৃষ্ঠা ছেড়ে যেতে চান?")) {} else { history.pushState(null, null, location.href); }
-            });
-        }
-        
-        function showTelegramModal() { document.getElementById('telegramModal').classList.add('show'); }
-        function closeTelegramModal() { document.getElementById('telegramModal').classList.remove('show'); }
-        function joinTelegram() { window.open(TELEGRAM_LINK, '_blank'); closeTelegramModal(); }
-        
-        // Set trending click
-        document.getElementById('trendingCard').onclick = () => handleMovieClick('trending');
-        
+        // Initialize
         window.onload = function() {
-            document.getElementById('siteName').textContent = "Viral Hub";
-            document.getElementById('trendingImage').src = TRENDING_MOVIE.thumbnail;
-            showInitialAutoAd();
+            loadMovies('all');
+            updateTrendingButton();
+            // Ensure trending card click works
+            document.getElementById('trendingCard').onclick = () => {
+                if (isMovieUnlocked('trending')) openPlayerDirect(TRENDING_MOVIE);
+                else initiateUnlock('trending');
+            };
         };
+        
+        // Expose globals
+        window.initiateUnlock = initiateUnlock;
+        window.filterMovies = filterMovies;
+        window.showFavorites = showFavorites;
+        window.toggleFavorite = toggleFavorite;
+        window.closePlayer = closePlayer;
+        window.showTelegramModal = showTelegramModal;
+        window.closeTelegramModal = closeTelegramModal;
+        window.openPlayerDirect = openPlayerDirect;
     </script>
 </body>
 </html>
