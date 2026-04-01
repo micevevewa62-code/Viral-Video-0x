@@ -24,6 +24,45 @@
             line-height: 1.5;
         }
 
+        /* Loading Overlay for Auto Ad */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease;
+        }
+        .loading-overlay.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f0f0f0;
+            border-top: 5px solid #ff0000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-size: 18px;
+            color: #ff0000;
+            font-weight: 500;
+        }
+
         /* Top running bar */
         .top-bar {
             background: #ff0000;
@@ -511,74 +550,94 @@
             cursor: pointer;
             color: #666;
         }
+
+        /* Main content wrapper - initially hidden until auto ad completes */
+        .main-content {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease;
+        }
+        .main-content.visible {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
-    <div class="top-bar"><div class="top-bar-content"><i class="fas fa-film"></i> ওয়াচ করুন আর ডাউনলোড করুন ফ্রিতে। প্রতিটি ভিডিও আনলক করতে ২টি এড দেখুন। <i class="fas fa-clock"></i> ২টি এড <i class="fas fa-unlock-alt"></i></div></div>
+    <!-- Loading Overlay for Auto Ad -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">প্রথমবারের জন্য একটি এড দেখানো হচ্ছে...</div>
+        <div class="loading-text" style="font-size: 14px; margin-top: 10px;">অনুগ্রহ করে অপেক্ষা করুন</div>
+    </div>
 
-    <div class="header">
-        <div class="header-content">
-            <div class="logo">
-                <img src="https://i.ibb.co.com/Ng7dVv2v/IMG-20260311-190406-589.jpg" alt="Logo">
-                <span>Video Hub</span>
+    <div class="main-content" id="mainContent">
+        <div class="top-bar"><div class="top-bar-content"><i class="fas fa-film"></i> ওয়াচ করুন আর ডাউনলোড করুন ফ্রিতে। প্রতিটি ভিডিও আনলক করতে ২টি এড দেখুন। <i class="fas fa-clock"></i> ২টি এড <i class="fas fa-unlock-alt"></i></div></div>
+
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://i.ibb.co.com/Ng7dVv2v/IMG-20260311-190406-589.jpg" alt="Logo">
+                    <span>Video Hub</span>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="categories">
-        <div class="category-wrapper">
-            <div class="category-btn active" data-category="all" onclick="filterMovies('all')"><i class="fas fa-globe"></i> সবগুলো</div>
-            <div class="category-btn" data-category="trending" onclick="filterMovies('trending')"><i class="fas fa-fire"></i> ট্রেন্ডিং</div>
-            <div class="category-btn" data-category="russian" onclick="filterMovies('russian')"><i class="fas fa-flag"></i> রাশিয়ান</div>
-            <div class="category-btn" data-category="kids" onclick="filterMovies('kids')"><i class="fas fa-child"></i> বাচ্চাদের</div>
-            <div class="category-btn" data-category="deshi" onclick="filterMovies('deshi')"><i class="fas fa-home"></i> দেশী</div>
-            <div class="category-btn" data-category="celebrity" onclick="filterMovies('celebrity')"><i class="fas fa-star"></i> সেলিব্রিটি</div>
-            <div class="category-btn" data-category="favorites" onclick="showFavorites()"><i class="fas fa-heart" style="color:#ff0000;"></i> পছন্দের</div>
+        <div class="categories">
+            <div class="category-wrapper">
+                <div class="category-btn active" data-category="all" onclick="filterMovies('all')"><i class="fas fa-globe"></i> সবগুলো</div>
+                <div class="category-btn" data-category="trending" onclick="filterMovies('trending')"><i class="fas fa-fire"></i> ট্রেন্ডিং</div>
+                <div class="category-btn" data-category="russian" onclick="filterMovies('russian')"><i class="fas fa-flag"></i> রাশিয়ান</div>
+                <div class="category-btn" data-category="kids" onclick="filterMovies('kids')"><i class="fas fa-child"></i> বাচ্চাদের</div>
+                <div class="category-btn" data-category="deshi" onclick="filterMovies('deshi')"><i class="fas fa-home"></i> দেশী</div>
+                <div class="category-btn" data-category="celebrity" onclick="filterMovies('celebrity')"><i class="fas fa-star"></i> সেলিব্রিটি</div>
+                <div class="category-btn" data-category="favorites" onclick="showFavorites()"><i class="fas fa-heart" style="color:#ff0000;"></i> পছন্দের</div>
+            </div>
         </div>
-    </div>
 
-    <!-- Trending Banner -->
-    <div class="trending-banner">
-        <div class="trending-card" id="trendingCard">
-            <img src="https://i.ibb.co.com/DfLzRDm0/article.jpg" class="trending-image" id="trendingImage">
+        <!-- Trending Banner with new image -->
+        <div class="trending-banner">
+            <div class="trending-card" id="trendingCard">
+                <img src="https://i.ibb.co.com/Xxcq8kxx/1774974824128.jpg" class="trending-image" id="trendingImage">
+            </div>
         </div>
-    </div>
-    <div class="trending-title-container">
-        <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং</span>
-        <h1 class="trending-title">ট্রেন্ডিং ভিডিও - সবার সেরা</h1>
-    </div>
-
-    <!-- Movie Grid - Will show exactly 6 videos below trending -->
-    <div class="movie-section">
-        <div class="section-header"><h2 id="sectionTitle"><i class="fas fa-fire"></i> জনপ্রিয় ভিডিও</h2></div>
-        <div class="movie-grid" id="movieGrid"></div>
-    </div>
-
-    <div class="telegram-btn" onclick="showTelegramModal()"><i class="fab fa-telegram-plane"></i></div>
-    
-    <!-- Telegram Modal -->
-    <div class="telegram-modal" id="telegramModal">
-        <div class="telegram-modal-content">
-            <i class="fab fa-telegram-plane" style="font-size:50px; color:#0088cc;"></i>
-            <h3>টেলিগ্রাম জয়েন করুন</h3>
-            <button class="telegram-join-btn" onclick="window.open('https://t.me/+FPnVaHrhRbY3NjI9','_blank');closeTelegramModal()">জয়েন করুন</button>
-            <div class="telegram-close" onclick="closeTelegramModal()">পরে দেখব</div>
+        <div class="trending-title-container">
+            <span class="trending-badge"><i class="fas fa-fire"></i> ট্রেন্ডিং</span>
+            <h1 class="trending-title">ট্রেন্ডিং ভিডিও - সবার সেরা</h1>
         </div>
-    </div>
 
-    <!-- Player Section -->
-    <div class="player-section" id="playerSection">
-        <div class="player-header">
-            <div class="back-btn" onclick="closePlayer()"><i class="fas fa-arrow-left"></i></div>
-            <h3 id="playerMovieTitle">ভিডিও</h3>
+        <!-- Movie Grid - Will show exactly 6 videos below trending -->
+        <div class="movie-section">
+            <div class="section-header"><h2 id="sectionTitle"><i class="fas fa-fire"></i> জনপ্রিয় ভিডিও</h2></div>
+            <div class="movie-grid" id="movieGrid"></div>
         </div>
-        <div class="clear-container" id="clearContainer"></div>
-        <div class="movie-actions">
-            <h2 id="playerTitle"></h2>
-            <p id="playerDesc"></p>
-            <div class="action-buttons">
-                <a href="#" class="premium-btn download" id="downloadBtn"><i class="fas fa-download"></i> ডাউনলোড</a>
-                <a href="#" class="premium-btn live" id="watchLiveBtn" target="_blank"><i class="fas fa-video"></i> লাইভ দেখুন</a>
+
+        <div class="telegram-btn" onclick="showTelegramModal()"><i class="fab fa-telegram-plane"></i></div>
+        
+        <!-- Telegram Modal -->
+        <div class="telegram-modal" id="telegramModal">
+            <div class="telegram-modal-content">
+                <i class="fab fa-telegram-plane" style="font-size:50px; color:#0088cc;"></i>
+                <h3>টেলিগ্রাম জয়েন করুন</h3>
+                <button class="telegram-join-btn" onclick="window.open('https://t.me/+FPnVaHrhRbY3NjI9','_blank');closeTelegramModal()">জয়েন করুন</button>
+                <div class="telegram-close" onclick="closeTelegramModal()">পরে দেখব</div>
+            </div>
+        </div>
+
+        <!-- Player Section -->
+        <div class="player-section" id="playerSection">
+            <div class="player-header">
+                <div class="back-btn" onclick="closePlayer()"><i class="fas fa-arrow-left"></i></div>
+                <h3 id="playerMovieTitle">ভিডিও</h3>
+            </div>
+            <div class="clear-container" id="clearContainer"></div>
+            <div class="movie-actions">
+                <h2 id="playerTitle"></h2>
+                <p id="playerDesc"></p>
+                <div class="action-buttons">
+                    <a href="#" class="premium-btn download" id="downloadBtn"><i class="fas fa-download"></i> ডাউনলোড</a>
+                    <a href="#" class="premium-btn live" id="watchLiveBtn" target="_blank"><i class="fas fa-video"></i> লাইভ দেখুন</a>
+                </div>
             </div>
         </div>
     </div>
@@ -620,6 +679,7 @@
         let currentPendingMovie = null;
         let monetagWindow = null;
         let monetagCloseTimer = null;
+        let autoAdCompleted = false;
         
         function isMovieUnlocked(movieId) {
             let status = unlockStatus.get(movieId);
@@ -673,11 +733,9 @@
         }
         
         function startAdsgramDirect() {
-            // Directly show Adsgram ad - no visible modal
             if (typeof Adsgram !== 'undefined') {
                 Adsgram.init({ blockId: "int-25418" }).show()
                     .then(() => {
-                        // Adsgram completed, now mark ad1 done and proceed to Monetag
                         if (currentPendingMovie) {
                             let status = unlockStatus.get(currentPendingMovie.id);
                             if (status) {
@@ -697,7 +755,6 @@
                         startMonetagDirect();
                     });
             } else {
-                // fallback
                 if (currentPendingMovie) {
                     let status = unlockStatus.get(currentPendingMovie.id);
                     if (status) status.ad1Done = true;
@@ -708,31 +765,25 @@
         }
         
         function startMonetagDirect() {
-            // Open Monetag link directly in new tab, auto close after 10 seconds
             const link = MONETAG_LINKS[Math.floor(Math.random() * MONETAG_LINKS.length)];
             monetagWindow = window.open(link, '_blank');
             
-            // Set timer to auto close after 10 seconds and complete ad2
             if (monetagCloseTimer) clearTimeout(monetagCloseTimer);
             monetagCloseTimer = setTimeout(() => {
                 if (monetagWindow && !monetagWindow.closed) {
                     monetagWindow.close();
                 }
-                // Mark ad2 done
                 if (currentPendingMovie) {
                     let status = unlockStatus.get(currentPendingMovie.id);
                     if (status) {
                         status.ad2Done = true;
                         unlockStatus.set(currentPendingMovie.id, status);
                     }
-                    // Check both done
                     let finalStatus = unlockStatus.get(currentPendingMovie.id);
                     if (finalStatus.ad1Done && finalStatus.ad2Done) {
-                        // Auto refresh UI and open player
                         refreshAllMoviesUI();
                         openPlayerDirect(currentPendingMovie);
                     } else {
-                        // safety
                         finalStatus.ad2Done = true;
                         unlockStatus.set(currentPendingMovie.id, finalStatus);
                         refreshAllMoviesUI();
@@ -740,7 +791,27 @@
                     }
                 }
                 monetagWindow = null;
-            }, 10000); // 10 seconds
+            }, 10000);
+        }
+        
+        // Auto Ad on Page Load (Adsgram only, no monetag)
+        function runAutoAdOnLoad() {
+            return new Promise((resolve) => {
+                if (typeof Adsgram !== 'undefined') {
+                    Adsgram.init({ blockId: "int-25418" }).show()
+                        .then(() => {
+                            console.log("Auto ad completed successfully");
+                            resolve(true);
+                        })
+                        .catch(err => {
+                            console.log("Auto ad error, still proceed", err);
+                            resolve(true);
+                        });
+                } else {
+                    console.log("Adsgram not loaded, skip auto ad");
+                    resolve(true);
+                }
+            });
         }
         
         function refreshAllMoviesUI() {
@@ -772,7 +843,6 @@
             playerDesc.textContent = movie.description;
             playerMovieTitle.textContent = movie.title;
             
-            // Clear image - NO BLUR
             clearContainer.innerHTML = `
                 <div class="clear-content">
                     <img src="${movie.thumbnail}" alt="${movie.title}" class="clear-image">
@@ -842,15 +912,33 @@
             document.getElementById('telegramModal').classList.remove('show'); 
         }
         
-        // Initialize
-        window.onload = function() {
+        // Initialize - First run auto ad, then show content
+        async function initializeSite() {
+            // Run auto ad
+            await runAutoAdOnLoad();
+            
+            // Hide loading overlay
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('hide');
+            
+            // Show main content
+            const mainContent = document.getElementById('mainContent');
+            mainContent.classList.add('visible');
+            
+            // Load movies and setup
             loadMovies('all');
             updateTrendingButton();
+            
             // Ensure trending card click works
             document.getElementById('trendingCard').onclick = () => {
                 if (isMovieUnlocked('trending')) openPlayerDirect(TRENDING_MOVIE);
                 else initiateUnlock('trending');
             };
+        }
+        
+        // Start initialization when page loads
+        window.onload = function() {
+            initializeSite();
         };
         
         // Expose globals
