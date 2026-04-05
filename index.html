@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MovieFlex - Watch & Earn (Session Only)</title>
+    <title>MovieFlex - Watch & Earn (Auto Ad OFF)</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -24,7 +24,7 @@
             line-height: 1.5;
         }
 
-        /* Loading Overlay for Auto Ad */
+        /* Loading Overlay - Now just a simple loader (no auto ad) */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -570,10 +570,10 @@
     </style>
 </head>
 <body>
-    <!-- Loading Overlay for Auto Ad -->
+    <!-- Simple Loading Overlay (No Auto Ad, just showing site loading) -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
-        <div class="loading-text">প্রথমবারের জন্য একটি এড দেখানো হচ্ছে...</div>
+        <div class="loading-text">লোড হচ্ছে...</div>
         <div class="loading-text" style="font-size: 14px; margin-top: 10px;">অনুগ্রহ করে অপেক্ষা করুন</div>
     </div>
 
@@ -655,18 +655,18 @@
     <script>
         // ============================================================
         //  ALL CONFIGURATIONS IN ONE PLACE
-        //  NOTE: Unlock status is SESSION-ONLY (no localStorage persistence)
-        //  User must re-watch ads after page refresh or browser close
+        //  AUTO AD IS DISABLED (enabled: false)
+        //  Only manual ad on user click (button/thumbnail/trending)
         // ============================================================
         const CONFIG = {
-            // Auto Ad Settings (Page Load)
+            // Auto Ad Settings - DISABLED (no ad on page load)
             autoAd: {
-                enabled: true,
-                delaySeconds: 20,
+                enabled: false,              // AUTO AD IS OFF - User sees NO ad on page load
+                delaySeconds: 0,
                 adsgramBlockId: "int-25418"
             },
             
-            // Ad Settings for ALL clicks (Buttons + Thumbnails + Trending Banner)
+            // Ad Settings for ALL user clicks (Buttons + Thumbnails + Trending Banner)
             clickAd: {
                 enabled: true,
                 adsgramBlockId: "int-25418",
@@ -701,12 +701,10 @@
         };
         
         // ========== SESSION-ONLY UNLOCK STATUS (NO localStorage) ==========
-        // Using JavaScript Map in memory only - will reset on page refresh/reload
-        let unlockedMovies = new Map();  // true = unlocked for this session only
+        let unlockedMovies = new Map();
         
         function loadUnlockStatus() {
-            // No localStorage loading - fresh session every time
-            // Initialize all movies as locked
+            // Fresh session - all locked
             CONFIG.moviesList.forEach(m => { 
                 unlockedMovies.set(m.id.toString(), false); 
             });
@@ -719,10 +717,9 @@
         
         function setMovieUnlocked(movieId, unlocked) {
             unlockedMovies.set(movieId.toString(), unlocked);
-            // No persistence - session only
         }
         
-        // ========== AD + REDIRECT FLOW (SESSION ONLY) ==========
+        // ========== AD + REDIRECT FLOW (Only on user click) ==========
         let isProcessingUnlock = false;
         
         async function showAdAndRedirect(movieId) {
@@ -756,13 +753,10 @@
             }
             
             if (adCompleted && CONFIG.clickAd.redirectUrl) {
-                // Store pending unlock in sessionStorage (for return from redirect within same session)
                 sessionStorage.setItem('pendingUnlockMovie', movieId);
-                // Redirect to configured direct link
                 window.location.href = CONFIG.clickAd.redirectUrl;
                 return true;
             } else {
-                // Fallback: unlock immediately if no redirect
                 setMovieUnlocked(movieId, true);
                 refreshAllUI();
                 openPlayerDirect(movie);
@@ -771,16 +765,13 @@
             }
         }
         
-        // Called when user returns from redirect (page becomes visible)
         function onPageVisibilityChange() {
             if (!document.hidden) {
                 const pendingId = sessionStorage.getItem('pendingUnlockMovie');
                 if (pendingId) {
                     sessionStorage.removeItem('pendingUnlockMovie');
-                    // Unlock the movie for this session only
                     setMovieUnlocked(pendingId, true);
                     refreshAllUI();
-                    // Automatically open the player after unlock
                     const movie = getMovieById(pendingId);
                     if (movie) {
                         openPlayerDirect(movie);
@@ -814,7 +805,6 @@
             };
         }
         
-        // Render movie grid
         function renderMovies(movies) {
             const grid = document.getElementById('movieGrid');
             let html = '';
@@ -844,7 +834,6 @@
             grid.innerHTML = html;
         }
         
-        // SINGLE FUNCTION FOR ALL CLICKS (Buttons + Thumbnails + Trending)
         async function handleAnyClick(movieId) {
             const movie = getMovieById(movieId);
             if (!movie) return;
@@ -891,7 +880,7 @@
             document.getElementById('playerSection').classList.remove('active');
         }
         
-        // Favorites (persists separately - just user preference, not unlock status)
+        // Favorites (persists separately)
         function getFavorites() { 
             let f = localStorage.getItem('movieFavorites_sessionFriendly'); 
             return f ? JSON.parse(f) : []; 
@@ -937,34 +926,24 @@
             document.getElementById('telegramModal').classList.remove('show'); 
         }
         
-        // Auto Ad on Load
-        function runAutoAdOnLoad() {
-            return new Promise((resolve) => {
-                if (!CONFIG.autoAd.enabled) { resolve(true); return; }
-                setTimeout(() => {
-                    if (typeof Adsgram !== 'undefined') {
-                        Adsgram.init({ blockId: CONFIG.autoAd.adsgramBlockId }).show()
-                            .then(() => resolve(true))
-                            .catch(() => resolve(true));
-                    } else { resolve(true); }
-                }, CONFIG.autoAd.delaySeconds * 1000);
-            });
-        }
-        
+        // Auto Ad is DISABLED - no ad on load
         async function initializeSite() {
             // Initialize session-only unlock status (all locked)
             loadUnlockStatus();
             
-            await runAutoAdOnLoad();
-            document.getElementById('loadingOverlay').classList.add('hide');
-            document.getElementById('mainContent').classList.add('visible');
+            // Just hide loading overlay after a short delay (no ad)
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hide');
+                document.getElementById('mainContent').classList.add('visible');
+            }, 500);
+            
             loadMovies('all');
             updateTrendingButtonUI();
             
             // Listen for page visibility to handle return from redirect
             document.addEventListener('visibilitychange', onPageVisibilityChange);
             
-            // Check if there was a pending unlock from previous redirect (within same session/tab)
+            // Check for pending unlock from redirect
             if (sessionStorage.getItem('pendingUnlockMovie')) {
                 const pendingId = sessionStorage.getItem('pendingUnlockMovie');
                 sessionStorage.removeItem('pendingUnlockMovie');
@@ -973,10 +952,6 @@
                 const movie = getMovieById(pendingId);
                 if (movie) openPlayerDirect(movie);
             }
-            
-            // Note: On page refresh, sessionStorage is cleared for new session,
-            // and unlockedMovies map is reinitialized to all false.
-            // So user must watch ads again - exactly as required.
         }
         
         // Expose globals
@@ -988,7 +963,6 @@
         window.openPlayerDirect = openPlayerDirect;
         window.showTelegramModal = showTelegramModal;
         window.closeTelegramModal = closeTelegramModal;
-        window.showAdAndRedirect = showAdAndRedirect;
         
         window.onload = initializeSite;
     </script>
