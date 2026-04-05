@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-
-<script type="text/javascript">
-  setTimeout(function() {
-    window.location.href = "https://t.me/movieflex00bot?startapp"; // আপনার লিঙ্ক দিন
-  }, 20000); // ১০ সেকেন্ড (১০,০০০ মিলিসেকেন্ড)
-</script>
-    
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MovieFlex - Watch & Earn</title>
+    <title>MovieFlex - Watch & Earn (Session Only)</title>
     
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -280,6 +272,7 @@
             position: relative;
             aspect-ratio: 16/9;
             overflow: hidden;
+            cursor: pointer;
         }
         .movie-thumbnail img {
             width: 100%;
@@ -515,11 +508,6 @@
             box-shadow: 0 5px 20px rgba(0,136,204,0.4);
         }
 
-        /* Ad Modals - Hidden now, direct redirect without notification */
-        .ad-modal, .monetag-modal {
-            display: none;
-        }
-
         .telegram-modal {
             position: fixed;
             top: 0;
@@ -559,7 +547,7 @@
             color: #666;
         }
 
-        /* Main content wrapper - initially hidden until auto ad completes */
+        /* Main content wrapper */
         .main-content {
             visibility: hidden;
             opacity: 0;
@@ -568,6 +556,16 @@
         .main-content.visible {
             visibility: visible;
             opacity: 1;
+        }
+        
+        /* Session info bar */
+        .session-info {
+            background: #fff3cd;
+            color: #856404;
+            padding: 8px 15px;
+            text-align: center;
+            font-size: 13px;
+            border-bottom: 1px solid #ffeeba;
         }
     </style>
 </head>
@@ -580,7 +578,11 @@
     </div>
 
     <div class="main-content" id="mainContent">
-        <div class="top-bar"><div class="top-bar-content"><i class="fas fa-film"></i> ওয়াচ করুন আর ডাউনলোড করুন ফ্রিতে। প্রতিটি ভিডিও আনলক করতে ২টি এড দেখুন। <i class="fas fa-clock"></i> ২টি এড <i class="fas fa-unlock-alt"></i></div></div>
+        <div class="top-bar"><div class="top-bar-content"><i class="fas fa-film"></i> ভিডিও দেখতে ক্লিক করুন → এড দেখুন → লিংকে যান → ফিরে এসে আনলক করে দেখুন <i class="fas fa-unlock-alt"></i></div></div>
+        
+        <div class="session-info" id="sessionInfo">
+            <i class="fas fa-info-circle"></i> শুধুমাত্র এই সেশনে আনলক থাকবে। পেজ রিফ্রেশ বা বন্ধ করলে আবার এড দেখতে হবে।
+        </div>
 
         <div class="header">
             <div class="header-content">
@@ -603,7 +605,7 @@
             </div>
         </div>
 
-        <!-- Trending Banner with new image -->
+        <!-- Trending Banner -->
         <div class="trending-banner">
             <div class="trending-card" id="trendingCard">
                 <img src="https://i.ibb.co.com/Xxcq8kxx/1774974824128.jpg" class="trending-image" id="trendingImage">
@@ -614,7 +616,7 @@
             <h1 class="trending-title">ট্রেন্ডিং ভিডিও - সবার সেরা</h1>
         </div>
 
-        <!-- Movie Grid - Will show exactly 6 videos below trending -->
+        <!-- Movie Grid -->
         <div class="movie-section">
             <div class="section-header"><h2 id="sectionTitle"><i class="fas fa-fire"></i> জনপ্রিয় ভিডিও</h2></div>
             <div class="movie-grid" id="movieGrid"></div>
@@ -639,7 +641,7 @@
                 <h3 id="playerMovieTitle">ভিডিও</h3>
             </div>
             <div class="clear-container" id="clearContainer"></div>
-            <div class="movie-actions">
+            <div class="movie-actions" style="padding: 20px;">
                 <h2 id="playerTitle"></h2>
                 <p id="playerDesc"></p>
                 <div class="action-buttons">
@@ -651,50 +653,169 @@
     </div>
 
     <script>
-        // ========== CONFIG ==========
-        const VIDEO_LINKS = ["https://omg10.com/4/9717825", "https://omg10.com/4/9429975", "https://omg10.com/4/9446627"];
-        const MONETAG_LINKS = ["https://omg10.com/4/9717825", "https://omg10.com/4/9429975"];
-        
-        const TRENDING_MOVIE = { 
-            id: "trending", 
-            title: "ফুল ভিডিও দেখুন", 
-            year: "2026", 
-            rating: "8.9", 
-            quality: "4K", 
-            category: "trending", 
-            thumbnail: "https://i.ibb.co.com/Xxcq8kxx/1774974824128.jpg", 
-            videoUrl: VIDEO_LINKS[0], 
-            downloadUrl: VIDEO_LINKS[1], 
-            liveUrl: VIDEO_LINKS[2], 
-            description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" 
+        // ============================================================
+        //  ALL CONFIGURATIONS IN ONE PLACE
+        //  NOTE: Unlock status is SESSION-ONLY (no localStorage persistence)
+        //  User must re-watch ads after page refresh or browser close
+        // ============================================================
+        const CONFIG = {
+            // Auto Ad Settings (Page Load)
+            autoAd: {
+                enabled: true,
+                delaySeconds: 2,
+                adsgramBlockId: "int-25418"
+            },
+            
+            // Ad Settings for ALL clicks (Buttons + Thumbnails + Trending Banner)
+            clickAd: {
+                enabled: true,
+                adsgramBlockId: "int-25418",
+                // After ad completes, user will be redirected to this URL
+                // When they come back (page visibility), the content becomes UNLOCKED for current session
+                redirectUrl: "https://t.me/movieflex00bot?startapp",
+            },
+            
+            // Video Data
+            trendingMovie: {
+                id: "trending",
+                title: "ফুল ভিডিও দেখুন",
+                year: "2026",
+                rating: "8.9",
+                quality: "4K",
+                category: "trending",
+                thumbnail: "https://i.ibb.co.com/Xxcq8kxx/1774974824128.jpg",
+                videoUrl: "https://omg10.com/4/9717825",
+                downloadUrl: "https://omg10.com/4/9429975",
+                liveUrl: "https://omg10.com/4/9446627",
+                description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও"
+            },
+            
+            moviesList: [
+                { id: 1, title: "ট্রেন্ডিং ভিডিও ১", year: "2026", rating: "8.7", quality: "4K", category: "trending", thumbnail: "https://i.ibb.co.com/kr3rBRR/IMG-20260330-213725-843.jpg", videoUrl: "https://omg10.com/4/9717825", downloadUrl: "https://omg10.com/4/9429975", liveUrl: "https://omg10.com/4/9446627", description: "সেরা ট্রেন্ডিং কন্টেন্ট" },
+                { id: 2, title: "রাশিয়ান ভিডিও", year: "2025", rating: "8.5", quality: "HD", category: "russian", thumbnail: "https://i.ibb.co.com/1Ybszq1Q/IMG-20260114-223941-811.jpg", videoUrl: "https://omg10.com/4/9429975", downloadUrl: "https://omg10.com/4/9446627", liveUrl: "https://omg10.com/4/9717825", description: "রাশিয়ান ডাবbed ভিডিও" },
+                { id: 3, title: "বাচ্চাদের গল্প", year: "2026", rating: "8.8", quality: "4K", category: "kids", thumbnail: "https://i.ibb.co.com/bgfx42jz/a4d72eae030ff34d4f1bdcd96293b6aa.webp", videoUrl: "https://omg10.com/4/9446627", downloadUrl: "https://omg10.com/4/9717825", liveUrl: "https://omg10.com/4/9429975", description: "মজার শিক্ষামূলক ভিডিও" },
+                { id: 4, title: "দেশী ধামাকা", year: "2025", rating: "8.6", quality: "4K", category: "deshi", thumbnail: "https://i.ibb.co.com/JRgTWNVn/6bc86af78a761de48fde600585bdbdf8.webp", videoUrl: "https://omg10.com/4/9717825", downloadUrl: "https://omg10.com/4/9429975", liveUrl: "https://omg10.com/4/9446627", description: "বাংলাদেশি ভিডিও" },
+                { id: 5, title: "সেলিব্রিটি স্পেশাল", year: "2025", rating: "8.9", quality: "4K", category: "celebrity", thumbnail: "https://i.ibb.co.com/TqMDrv1t/FB-IMG-1763524521416.jpg", videoUrl: "https://omg10.com/4/9429975", downloadUrl: "https://omg10.com/4/9446627", liveUrl: "https://omg10.com/4/9717825", description: "তারকাদের ভিডিও" },
+                { id: 6, title: "এক্সক্লুসিভ ক্লিপ", year: "2026", rating: "8.4", quality: "HD", category: "trending", thumbnail: "https://i.ibb.co.com/N2BXSPZh/FB-IMG-1763523970379.jpg", videoUrl: "https://omg10.com/4/9446627", downloadUrl: "https://omg10.com/4/9717825", liveUrl: "https://omg10.com/4/9429975", description: "ভাইরাল ক্লিপ" }
+            ]
         };
         
-        // Exactly 6 movies for the grid below trending
-        const MOVIES = [
-            { id: 1, title: "ট্রেন্ডিং ভিডিও ১", year: "2026", rating: "8.7", quality: "4K", category: "trending", thumbnail: "https://i.ibb.co.com/kr3rBRR/IMG-20260330-213725-843.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "সেরা ট্রেন্ডিং কন্টেন্ট" },
-            { id: 2, title: "রাশিয়ান ভিডিও", year: "2025", rating: "8.5", quality: "HD", category: "russian", thumbnail: "https://i.ibb.co.com/1Ybszq1Q/IMG-20260114-223941-811.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "রাশিয়ান ডাবbed ভিডিও" },
-            { id: 3, title: "বাচ্চাদের গল্প", year: "2026", rating: "8.8", quality: "4K", category: "kids", thumbnail: "https://i.ibb.co.com/bgfx42jz/a4d72eae030ff34d4f1bdcd96293b6aa.webp", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "মজার শিক্ষামূলক ভিডিও" },
-            { id: 4, title: "দেশী ধামাকা", year: "2025", rating: "8.6", quality: "4K", category: "deshi", thumbnail: "https://i.ibb.co.com/JRgTWNVn/6bc86af78a761de48fde600585bdbdf8.webp", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "বাংলাদেশি ভিডিও" },
-            { id: 5, title: "সেলিব্রিটি স্পেশাল", year: "2025", rating: "8.9", quality: "4K", category: "celebrity", thumbnail: "https://i.ibb.co.com/TqMDrv1t/FB-IMG-1763524521416.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "তারকাদের ভিডিও" },
-            { id: 6, title: "এক্সক্লুসিভ ক্লিপ", year: "2026", rating: "8.4", quality: "HD", category: "trending", thumbnail: "https://i.ibb.co.com/N2BXSPZh/FB-IMG-1763523970379.jpg", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "ভাইরাল ক্লিপ" }
-        ];
+        // ========== SESSION-ONLY UNLOCK STATUS (NO localStorage) ==========
+        // Using JavaScript Map in memory only - will reset on page refresh/reload
+        let unlockedMovies = new Map();  // true = unlocked for this session only
         
-        // unlock tracking
-        let unlockStatus = new Map();
-        MOVIES.forEach(m => unlockStatus.set(m.id, { ad1Done: false, ad2Done: false }));
-        unlockStatus.set("trending", { ad1Done: false, ad2Done: false });
-        
-        let currentPendingMovie = null;
-        let monetagWindow = null;
-        let monetagCloseTimer = null;
-        let autoAdCompleted = false;
-        
-        function isMovieUnlocked(movieId) {
-            let status = unlockStatus.get(movieId);
-            return status && status.ad1Done && status.ad2Done;
+        function loadUnlockStatus() {
+            // No localStorage loading - fresh session every time
+            // Initialize all movies as locked
+            CONFIG.moviesList.forEach(m => { 
+                unlockedMovies.set(m.id.toString(), false); 
+            });
+            unlockedMovies.set('trending', false);
         }
         
-        function displayMovies(movies) {
+        function isMovieUnlocked(movieId) {
+            return unlockedMovies.get(movieId.toString()) === true;
+        }
+        
+        function setMovieUnlocked(movieId, unlocked) {
+            unlockedMovies.set(movieId.toString(), unlocked);
+            // No persistence - session only
+        }
+        
+        // ========== AD + REDIRECT FLOW (SESSION ONLY) ==========
+        let isProcessingUnlock = false;
+        
+        async function showAdAndRedirect(movieId) {
+            if (isProcessingUnlock) {
+                return false;
+            }
+            
+            const movie = getMovieById(movieId);
+            if (!movie) return false;
+            
+            // If already unlocked in this session, just open player
+            if (isMovieUnlocked(movieId)) {
+                openPlayerDirect(movie);
+                return false;
+            }
+            
+            isProcessingUnlock = true;
+            
+            // Show Adsgram ad
+            let adCompleted = false;
+            if (typeof Adsgram !== 'undefined' && CONFIG.clickAd.enabled) {
+                try {
+                    await Adsgram.init({ blockId: CONFIG.clickAd.adsgramBlockId }).show();
+                    adCompleted = true;
+                } catch (err) {
+                    console.log("Adsgram error", err);
+                    adCompleted = true;
+                }
+            } else {
+                adCompleted = true;
+            }
+            
+            if (adCompleted && CONFIG.clickAd.redirectUrl) {
+                // Store pending unlock in sessionStorage (for return from redirect within same session)
+                sessionStorage.setItem('pendingUnlockMovie', movieId);
+                // Redirect to configured direct link
+                window.location.href = CONFIG.clickAd.redirectUrl;
+                return true;
+            } else {
+                // Fallback: unlock immediately if no redirect
+                setMovieUnlocked(movieId, true);
+                refreshAllUI();
+                openPlayerDirect(movie);
+                isProcessingUnlock = false;
+                return false;
+            }
+        }
+        
+        // Called when user returns from redirect (page becomes visible)
+        function onPageVisibilityChange() {
+            if (!document.hidden) {
+                const pendingId = sessionStorage.getItem('pendingUnlockMovie');
+                if (pendingId) {
+                    sessionStorage.removeItem('pendingUnlockMovie');
+                    // Unlock the movie for this session only
+                    setMovieUnlocked(pendingId, true);
+                    refreshAllUI();
+                    // Automatically open the player after unlock
+                    const movie = getMovieById(pendingId);
+                    if (movie) {
+                        openPlayerDirect(movie);
+                    }
+                    isProcessingUnlock = false;
+                }
+            }
+        }
+        
+        // ========== HELPER FUNCTIONS ==========
+        function getMovieById(id) {
+            if (id === "trending") return CONFIG.trendingMovie;
+            return CONFIG.moviesList.find(m => m.id === id);
+        }
+        
+        function refreshAllUI() {
+            loadMovies(currentCategory);
+            updateTrendingButtonUI();
+        }
+        
+        function updateTrendingButtonUI() {
+            const trendingCard = document.getElementById('trendingCard');
+            const unlocked = isMovieUnlocked('trending');
+            trendingCard.style.cursor = 'pointer';
+            trendingCard.onclick = () => {
+                if (unlocked) {
+                    openPlayerDirect(CONFIG.trendingMovie);
+                } else {
+                    showAdAndRedirect('trending');
+                }
+            };
+        }
+        
+        // Render movie grid
+        function renderMovies(movies) {
             const grid = document.getElementById('movieGrid');
             let html = '';
             movies.forEach(movie => {
@@ -702,17 +823,17 @@
                 const isFav = getFavorites().includes(movie.id);
                 html += `
                     <div class="movie-card">
-                        <div class="movie-thumbnail">
+                        <div class="movie-thumbnail" onclick="event.stopPropagation(); handleAnyClick(${movie.id})">
                             <img src="${movie.thumbnail}" alt="${movie.title}">
                             <span class="movie-quality">${movie.quality}</span>
                         </div>
                         <div class="movie-info">
                             <div class="movie-title">${movie.title}</div>
                             <div class="movie-meta"><span>${movie.year}</span><span><i class="fas fa-star"></i> ${movie.rating}</span></div>
-                            <button class="watch-btn ${unlocked ? 'unlocked' : 'locked'}" data-id="${movie.id}" onclick="event.stopPropagation(); initiateUnlock(${movie.id})">
-                                <i class="fas ${unlocked ? 'fa-play-circle' : 'fa-lock'}"></i> ${unlocked ? 'ভিডিও দেখুন' : 'আনলক করতে ২টি এড দেখুন'}
+                            <button class="watch-btn ${unlocked ? 'unlocked' : 'locked'}" data-id="${movie.id}" onclick="event.stopPropagation(); handleAnyClick(${movie.id})">
+                                <i class="fas ${unlocked ? 'fa-play-circle' : 'fa-lock'}"></i> ${unlocked ? 'ভিডিও দেখুন' : 'এড দেখে আনলক করুন'}
                             </button>
-                            ${!unlocked ? '<div class="lock-info"><i class="fas fa-info-circle"></i> ২টি এড দেখে আনলক করুন</div>' : ''}
+                            ${!unlocked ? '<div class="lock-info"><i class="fas fa-info-circle"></i> এড দেখুন → লিংকে যান → ফিরে এসে দেখুন</div>' : ''}
                         </div>
                         <div class="like-btn ${isFav ? 'active' : ''}" data-id="${movie.id}" onclick="event.stopPropagation(); toggleFavorite(${movie.id})">
                             <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
@@ -723,119 +844,15 @@
             grid.innerHTML = html;
         }
         
-        // UNLOCK SEQUENCE: 2 ads - DIRECT, NO NOTIFICATION MODAL
-        function initiateUnlock(movieId) {
+        // SINGLE FUNCTION FOR ALL CLICKS (Buttons + Thumbnails + Trending)
+        async function handleAnyClick(movieId) {
+            const movie = getMovieById(movieId);
+            if (!movie) return;
             if (isMovieUnlocked(movieId)) {
-                let movie = MOVIES.find(m => m.id === movieId);
-                if (!movie && movieId === "trending") movie = TRENDING_MOVIE;
-                if (movie) openPlayerDirect(movie);
-                return;
-            }
-            
-            currentPendingMovie = MOVIES.find(m => m.id === movieId);
-            if (!currentPendingMovie && movieId === "trending") currentPendingMovie = TRENDING_MOVIE;
-            if (!currentPendingMovie) return;
-            
-            // Start first ad: Adsgram (direct, no popup notification)
-            startAdsgramDirect();
-        }
-        
-        function startAdsgramDirect() {
-            if (typeof Adsgram !== 'undefined') {
-                Adsgram.init({ blockId: "int-25418" }).show()
-                    .then(() => {
-                        if (currentPendingMovie) {
-                            let status = unlockStatus.get(currentPendingMovie.id);
-                            if (status) {
-                                status.ad1Done = true;
-                                unlockStatus.set(currentPendingMovie.id, status);
-                            }
-                        }
-                        startMonetagDirect();
-                    })
-                    .catch(err => {
-                        console.log("Adsgram error, still proceed to Monetag", err);
-                        if (currentPendingMovie) {
-                            let status = unlockStatus.get(currentPendingMovie.id);
-                            if (status) status.ad1Done = true;
-                            unlockStatus.set(currentPendingMovie.id, status);
-                        }
-                        startMonetagDirect();
-                    });
+                openPlayerDirect(movie);
             } else {
-                if (currentPendingMovie) {
-                    let status = unlockStatus.get(currentPendingMovie.id);
-                    if (status) status.ad1Done = true;
-                    unlockStatus.set(currentPendingMovie.id, status);
-                }
-                startMonetagDirect();
+                await showAdAndRedirect(movieId);
             }
-        }
-        
-        function startMonetagDirect() {
-            const link = MONETAG_LINKS[Math.floor(Math.random() * MONETAG_LINKS.length)];
-            monetagWindow = window.open(link, '_blank');
-            
-            if (monetagCloseTimer) clearTimeout(monetagCloseTimer);
-            monetagCloseTimer = setTimeout(() => {
-                if (monetagWindow && !monetagWindow.closed) {
-                    monetagWindow.close();
-                }
-                if (currentPendingMovie) {
-                    let status = unlockStatus.get(currentPendingMovie.id);
-                    if (status) {
-                        status.ad2Done = true;
-                        unlockStatus.set(currentPendingMovie.id, status);
-                    }
-                    let finalStatus = unlockStatus.get(currentPendingMovie.id);
-                    if (finalStatus.ad1Done && finalStatus.ad2Done) {
-                        refreshAllMoviesUI();
-                        openPlayerDirect(currentPendingMovie);
-                    } else {
-                        finalStatus.ad2Done = true;
-                        unlockStatus.set(currentPendingMovie.id, finalStatus);
-                        refreshAllMoviesUI();
-                        openPlayerDirect(currentPendingMovie);
-                    }
-                }
-                monetagWindow = null;
-            }, 1000);
-        }
-        
-        // Auto Ad on Page Load (Adsgram only, no monetag)
-        function runAutoAdOnLoad() {
-            return new Promise((resolve) => {
-                if (typeof Adsgram !== 'undefined') {
-                    Adsgram.init({ blockId: "int-25418" }).show()
-                        .then(() => {
-                            console.log("Auto ad completed successfully");
-                            resolve(true);
-                        })
-                        .catch(err => {
-                            console.log("Auto ad error, still proceed", err);
-                            resolve(true);
-                        });
-                } else {
-                    console.log("Adsgram not loaded, skip auto ad");
-                    resolve(true);
-                }
-            });
-        }
-        
-        function refreshAllMoviesUI() {
-            if (currentCategory === 'favorites') showFavorites();
-            else loadMovies(currentCategory);
-            updateTrendingButton();
-        }
-        
-        function updateTrendingButton() {
-            const trendingCard = document.getElementById('trendingCard');
-            const unlocked = isMovieUnlocked('trending');
-            trendingCard.style.cursor = 'pointer';
-            trendingCard.onclick = () => {
-                if (unlocked) openPlayerDirect(TRENDING_MOVIE);
-                else initiateUnlock('trending');
-            };
         }
         
         function openPlayerDirect(movie) {
@@ -874,13 +891,13 @@
             document.getElementById('playerSection').classList.remove('active');
         }
         
-        // Favorites
+        // Favorites (persists separately - just user preference, not unlock status)
         function getFavorites() { 
-            let f = localStorage.getItem('movieFavorites'); 
+            let f = localStorage.getItem('movieFavorites_sessionFriendly'); 
             return f ? JSON.parse(f) : []; 
         }
         function saveFavorites(favs) { 
-            localStorage.setItem('movieFavorites', JSON.stringify(favs)); 
+            localStorage.setItem('movieFavorites_sessionFriendly', JSON.stringify(favs)); 
         }
         function toggleFavorite(movieId) {
             let favs = getFavorites();
@@ -896,17 +913,17 @@
             document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelector('[data-category="favorites"]')?.classList.add('active');
             let favs = getFavorites();
-            let favMovies = MOVIES.filter(m => favs.includes(m.id));
+            let favMovies = CONFIG.moviesList.filter(m => favs.includes(m.id));
             document.getElementById('sectionTitle').innerHTML = '<i class="fas fa-heart"></i> আমার পছন্দের তালিকা';
-            displayMovies(favMovies);
+            renderMovies(favMovies);
         }
         
         let currentCategory = 'all';
         function loadMovies(category = 'all') {
             currentCategory = category;
-            let filtered = category === 'all' ? MOVIES : MOVIES.filter(m => m.category === category);
+            let filtered = category === 'all' ? CONFIG.moviesList : CONFIG.moviesList.filter(m => m.category === category);
             document.getElementById('sectionTitle').innerHTML = `<i class="fas fa-film"></i> ${category === 'all' ? 'জনপ্রিয় ভিডিও' : category} ভিডিও`;
-            displayMovies(filtered);
+            renderMovies(filtered);
         }
         function filterMovies(cat) { 
             currentCategory = cat; 
@@ -920,44 +937,60 @@
             document.getElementById('telegramModal').classList.remove('show'); 
         }
         
-        // Initialize - First run auto ad, then show content
-        async function initializeSite() {
-            // Run auto ad
-            await runAutoAdOnLoad();
-            
-            // Hide loading overlay
-            const overlay = document.getElementById('loadingOverlay');
-            overlay.classList.add('hide');
-            
-            // Show main content
-            const mainContent = document.getElementById('mainContent');
-            mainContent.classList.add('visible');
-            
-            // Load movies and setup
-            loadMovies('all');
-            updateTrendingButton();
-            
-            // Ensure trending card click works
-            document.getElementById('trendingCard').onclick = () => {
-                if (isMovieUnlocked('trending')) openPlayerDirect(TRENDING_MOVIE);
-                else initiateUnlock('trending');
-            };
+        // Auto Ad on Load
+        function runAutoAdOnLoad() {
+            return new Promise((resolve) => {
+                if (!CONFIG.autoAd.enabled) { resolve(true); return; }
+                setTimeout(() => {
+                    if (typeof Adsgram !== 'undefined') {
+                        Adsgram.init({ blockId: CONFIG.autoAd.adsgramBlockId }).show()
+                            .then(() => resolve(true))
+                            .catch(() => resolve(true));
+                    } else { resolve(true); }
+                }, CONFIG.autoAd.delaySeconds * 1000);
+            });
         }
         
-        // Start initialization when page loads
-        window.onload = function() {
-            initializeSite();
-        };
+        async function initializeSite() {
+            // Initialize session-only unlock status (all locked)
+            loadUnlockStatus();
+            
+            await runAutoAdOnLoad();
+            document.getElementById('loadingOverlay').classList.add('hide');
+            document.getElementById('mainContent').classList.add('visible');
+            loadMovies('all');
+            updateTrendingButtonUI();
+            
+            // Listen for page visibility to handle return from redirect
+            document.addEventListener('visibilitychange', onPageVisibilityChange);
+            
+            // Check if there was a pending unlock from previous redirect (within same session/tab)
+            if (sessionStorage.getItem('pendingUnlockMovie')) {
+                const pendingId = sessionStorage.getItem('pendingUnlockMovie');
+                sessionStorage.removeItem('pendingUnlockMovie');
+                setMovieUnlocked(pendingId, true);
+                refreshAllUI();
+                const movie = getMovieById(pendingId);
+                if (movie) openPlayerDirect(movie);
+            }
+            
+            // Note: On page refresh, sessionStorage is cleared for new session,
+            // and unlockedMovies map is reinitialized to all false.
+            // So user must watch ads again - exactly as required.
+        }
         
         // Expose globals
-        window.initiateUnlock = initiateUnlock;
+        window.handleAnyClick = handleAnyClick;
         window.filterMovies = filterMovies;
         window.showFavorites = showFavorites;
         window.toggleFavorite = toggleFavorite;
         window.closePlayer = closePlayer;
+        window.openPlayerDirect = openPlayerDirect;
         window.showTelegramModal = showTelegramModal;
         window.closeTelegramModal = closeTelegramModal;
-        window.openPlayerDirect = openPlayerDirect;
+        window.showAdAndRedirect = showAdAndRedirect;
+        
+        window.onload = initializeSite;
     </script>
 </body>
 </html>
