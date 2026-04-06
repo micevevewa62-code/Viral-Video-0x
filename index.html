@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-
-<script type="text/javascript">
-  setTimeout(function() {
-    window.location.href = "https://t.me/o0Uq6h5R0p80ZGE1bot?startapp"; // আপনার লিঙ্ক দিন
-  }, 15000); // ১০ সেকেন্ড (১০,০০০ মিলিসেকেন্ড)
-</script>
-    
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MovieFlex - Watch & Earn</title>
@@ -32,7 +24,78 @@
             line-height: 1.5;
         }
 
-        /* Loading Overlay for Auto Ad */
+        /* Robot Verification Modal */
+        .robot-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        .robot-verification.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .robot-box {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            border: 2px solid #ff0000;
+            animation: borderPulse 2s infinite;
+        }
+        @keyframes borderPulse {
+            0% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
+            50% { border-color: #0000ff; box-shadow: 0 0 20px #0000ff; }
+            100% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
+        }
+        .robot-icon {
+            font-size: 80px;
+            color: #ff0000;
+            margin-bottom: 20px;
+        }
+        .robot-box h2 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .robot-box p {
+            color: #ccc;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .verify-btn {
+            background: linear-gradient(135deg, #ff0000, #0000ff);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .verify-btn:hover { transform: scale(1.05); }
+        .verify-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Loading Overlay for Ad */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -41,16 +104,13 @@
             height: 100%;
             background: #ffffff;
             z-index: 9999;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            transition: opacity 0.5s ease;
         }
-        .loading-overlay.hide {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+        .loading-overlay.show {
+            display: flex;
         }
         .loading-spinner {
             width: 60px;
@@ -392,7 +452,7 @@
             margin-top: 6px;
         }
 
-        /* Player Section - Clear Image */
+        /* Player Section */
         .player-section {
             position: fixed;
             top: 0;
@@ -515,9 +575,15 @@
             box-shadow: 0 5px 20px rgba(0,136,204,0.4);
         }
 
-        /* Ad Modals - Hidden now, direct redirect without notification */
-        .ad-modal, .monetag-modal {
-            display: none;
+        /* Main content wrapper - hidden until verification and ad done */
+        .main-content {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s ease;
+        }
+        .main-content.visible {
+            visibility: visible;
+            opacity: 1;
         }
 
         .telegram-modal {
@@ -558,24 +624,23 @@
             cursor: pointer;
             color: #666;
         }
-
-        /* Main content wrapper - initially hidden until auto ad completes */
-        .main-content {
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0s, opacity 0.5s ease;
-        }
-        .main-content.visible {
-            visibility: visible;
-            opacity: 1;
-        }
     </style>
 </head>
 <body>
-    <!-- Loading Overlay for Auto Ad -->
+    <!-- Robot Verification Modal -->
+    <div class="robot-verification" id="robotVerification">
+        <div class="robot-box">
+            <div class="robot-icon"><i class="fas fa-robot"></i></div>
+            <h2>রোবট ভেরিফিকেশন</h2>
+            <p>আপনি রোবট নন তা নিশ্চিত করতে নিচের বাটনে ক্লিক করুন এবং 10 সেকেন্ড অপেক্ষা করুন </p>
+            <button class="verify-btn" id="verifyBtn"><i class="fas fa-shield-alt"></i> ভেরিফাই করুন</button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
-        <div class="loading-text">প্রথমবারের জন্য একটি এড দেখানো হচ্ছে...</div>
+        <div class="loading-text">এড দেখানো হচ্ছে...</div>
         <div class="loading-text" style="font-size: 14px; margin-top: 10px;">অনুগ্রহ করে অপেক্ষা করুন</div>
     </div>
 
@@ -603,7 +668,7 @@
             </div>
         </div>
 
-        <!-- Trending Banner with new image -->
+        <!-- Trending Banner -->
         <div class="trending-banner">
             <div class="trending-card" id="trendingCard">
                 <img src="https://i.ibb.co.com/Xxcq8kxx/1774974824128.jpg" class="trending-image" id="trendingImage">
@@ -614,7 +679,7 @@
             <h1 class="trending-title">ট্রেন্ডিং ভিডিও - সবার সেরা</h1>
         </div>
 
-        <!-- Movie Grid - Will show exactly 6 videos below trending -->
+        <!-- Movie Grid -->
         <div class="movie-section">
             <div class="section-header"><h2 id="sectionTitle"><i class="fas fa-fire"></i> জনপ্রিয় ভিডিও</h2></div>
             <div class="movie-grid" id="movieGrid"></div>
@@ -652,8 +717,8 @@
 
     <script>
         // ========== CONFIG ==========
-        const VIDEO_LINKS = ["https://omg10.com/4/9717825", "https://omg10.com/4/9429975", "https://omg10.com/4/9446627"];
-        const MONETAG_LINKS = ["https://omg10.com/4/9717825", "https://omg10.com/4/9429975"];
+        const VIDEO_LINKS = ["https://t.me/f785OSC7KPk4MGJl4abot?startapp", "https://t.me/o0Uq6h5R0p80ZGE1bot?startapp", "https://t.me/f785OSC7KPk4MGJl4abot?startapp"];
+        const MONETAG_LINKS = ["https://t.me/o0Uq6h5R0p80ZGE1bot?startapp", "https://t.me/f785OSC7KPk4MGJl4abot?startapp"];
         
         const TRENDING_MOVIE = { 
             id: "trending", 
@@ -669,7 +734,6 @@
             description: "অস্থির ছিল ভিডিওটি, মারাত্মক ভিডিও" 
         };
         
-        // Exactly 6 movies for the grid below trending
         const MOVIES = [
             { id: 1, title: "ট্রেন্ডিং ভিডিও ১", year: "2026", rating: "8.7", quality: "4K", category: "trending", thumbnail: "https://i.ibb.co.com/kr3rBRR/IMG-20260330-213725-843.jpg", videoUrl: VIDEO_LINKS[0], downloadUrl: VIDEO_LINKS[1], liveUrl: VIDEO_LINKS[2], description: "সেরা ট্রেন্ডিং কন্টেন্ট" },
             { id: 2, title: "রাশিয়ান ভিডিও", year: "2025", rating: "8.5", quality: "HD", category: "russian", thumbnail: "https://i.ibb.co.com/1Ybszq1Q/IMG-20260114-223941-811.jpg", videoUrl: VIDEO_LINKS[1], downloadUrl: VIDEO_LINKS[2], liveUrl: VIDEO_LINKS[0], description: "রাশিয়ান ডাবbed ভিডিও" },
@@ -679,7 +743,6 @@
             { id: 6, title: "এক্সক্লুসিভ ক্লিপ", year: "2026", rating: "8.4", quality: "HD", category: "trending", thumbnail: "https://i.ibb.co.com/N2BXSPZh/FB-IMG-1763523970379.jpg", videoUrl: VIDEO_LINKS[2], downloadUrl: VIDEO_LINKS[0], liveUrl: VIDEO_LINKS[1], description: "ভাইরাল ক্লিপ" }
         ];
         
-        // unlock tracking
         let unlockStatus = new Map();
         MOVIES.forEach(m => unlockStatus.set(m.id, { ad1Done: false, ad2Done: false }));
         unlockStatus.set("trending", { ad1Done: false, ad2Done: false });
@@ -687,7 +750,7 @@
         let currentPendingMovie = null;
         let monetagWindow = null;
         let monetagCloseTimer = null;
-        let autoAdCompleted = false;
+        let verificationCompleted = false;
         
         function isMovieUnlocked(movieId) {
             let status = unlockStatus.get(movieId);
@@ -723,8 +786,13 @@
             grid.innerHTML = html;
         }
         
-        // UNLOCK SEQUENCE: 2 ads - DIRECT, NO NOTIFICATION MODAL
+        // UNLOCK SEQUENCE
         function initiateUnlock(movieId) {
+            if (!verificationCompleted) {
+                alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!");
+                return;
+            }
+            
             if (isMovieUnlocked(movieId)) {
                 let movie = MOVIES.find(m => m.id === movieId);
                 if (!movie && movieId === "trending") movie = TRENDING_MOVIE;
@@ -736,7 +804,6 @@
             if (!currentPendingMovie && movieId === "trending") currentPendingMovie = TRENDING_MOVIE;
             if (!currentPendingMovie) return;
             
-            // Start first ad: Adsgram (direct, no popup notification)
             startAdsgramDirect();
         }
         
@@ -802,21 +869,26 @@
             }, 1000);
         }
         
-        // Auto Ad on Page Load (Adsgram only, no monetag)
-        function runAutoAdOnLoad() {
+        // Verification Ad - Shows Adsgram ad when user clicks verify button
+        function runVerificationAd() {
             return new Promise((resolve) => {
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                loadingOverlay.classList.add('show');
+                
                 if (typeof Adsgram !== 'undefined') {
                     Adsgram.init({ blockId: "int-25418" }).show()
                         .then(() => {
-                            console.log("Auto ad completed successfully");
+                            loadingOverlay.classList.remove('show');
                             resolve(true);
                         })
                         .catch(err => {
-                            console.log("Auto ad error, still proceed", err);
+                            console.log("Verification ad error, still proceed", err);
+                            loadingOverlay.classList.remove('show');
                             resolve(true);
                         });
                 } else {
-                    console.log("Adsgram not loaded, skip auto ad");
+                    console.log("Adsgram not loaded, skip verification ad");
+                    loadingOverlay.classList.remove('show');
                     resolve(true);
                 }
             });
@@ -833,6 +905,10 @@
             const unlocked = isMovieUnlocked('trending');
             trendingCard.style.cursor = 'pointer';
             trendingCard.onclick = () => {
+                if (!verificationCompleted) {
+                    alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!");
+                    return;
+                }
                 if (unlocked) openPlayerDirect(TRENDING_MOVIE);
                 else initiateUnlock('trending');
             };
@@ -909,6 +985,10 @@
             displayMovies(filtered);
         }
         function filterMovies(cat) { 
+            if (!verificationCompleted) {
+                alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!");
+                return;
+            }
             currentCategory = cat; 
             loadMovies(cat); 
         }
@@ -920,28 +1000,45 @@
             document.getElementById('telegramModal').classList.remove('show'); 
         }
         
-        // Initialize - First run auto ad, then show content
+        // Initialize - First show robot verification
         async function initializeSite() {
-            // Run auto ad
-            await runAutoAdOnLoad();
+            const verifyBtn = document.getElementById('verifyBtn');
+            const robotModal = document.getElementById('robotVerification');
             
-            // Hide loading overlay
-            const overlay = document.getElementById('loadingOverlay');
-            overlay.classList.add('hide');
-            
-            // Show main content
-            const mainContent = document.getElementById('mainContent');
-            mainContent.classList.add('visible');
-            
-            // Load movies and setup
-            loadMovies('all');
-            updateTrendingButton();
-            
-            // Ensure trending card click works
-            document.getElementById('trendingCard').onclick = () => {
-                if (isMovieUnlocked('trending')) openPlayerDirect(TRENDING_MOVIE);
-                else initiateUnlock('trending');
-            };
+            verifyBtn.addEventListener('click', async () => {
+                verifyBtn.disabled = true;
+                verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ভেরিফাই করা হচ্ছে...';
+                
+                // Show ad from adsgram
+                const adCompleted = await runVerificationAd();
+                
+                if (adCompleted) {
+                    verificationCompleted = true;
+                    robotModal.classList.add('hide');
+                    
+                    // Show main content
+                    const mainContent = document.getElementById('mainContent');
+                    mainContent.classList.add('visible');
+                    
+                    // Load movies and setup
+                    loadMovies('all');
+                    updateTrendingButton();
+                    
+                    // Ensure trending card click works
+                    document.getElementById('trendingCard').onclick = () => {
+                        if (!verificationCompleted) {
+                            alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!");
+                            return;
+                        }
+                        if (isMovieUnlocked('trending')) openPlayerDirect(TRENDING_MOVIE);
+                        else initiateUnlock('trending');
+                    };
+                } else {
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = '<i class="fas fa-shield-alt"></i> ভেরিফাই করুন';
+                    alert("এড দেখাতে সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+                }
+            });
         }
         
         // Start initialization when page loads
