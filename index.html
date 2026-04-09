@@ -6,25 +6,18 @@
 <script>
     // insert your block id
     const AdController = window.Adsgram.init({ blockId: "int-25418" });
-    const button = document.getElementById('ad');
-    button.addEventListener('click', () => {
-        AdController.show().then((result) => {
-            alert('Reward');
-        }).catch((result) => {
-            alert(JSON.stringify(result, null, 4));
-        })
-    })
     
-    // ১০ সেকেন্ড পর অটো অ্যাড লোড হবে
+    // ১ সেকেন্ড পর অটো অ্যাড লোড হবে
     setTimeout(() => {
         AdController.show().then((result) => {
+            console.log('Reward', result);
             alert('Reward');
         }).catch((result) => {
+            console.log('Error', result);
             alert(JSON.stringify(result, null, 4));
         })
     }, 1000);
 </script>
-
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
