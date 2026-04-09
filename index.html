@@ -4,19 +4,24 @@
 
 
 <script>
-    // insert your block id
-    const AdController = window.Adsgram.init({ blockId: "int-25418" });
+    console.log('1. Checking Adsgram...');
+    console.log('Adsgram object:', window.Adsgram);
     
-    // ১ সেকেন্ড পর অটো অ্যাড লোড হবে
-    setTimeout(() => {
-        AdController.show().then((result) => {
-            console.log('Reward', result);
-            alert('Reward');
-        }).catch((result) => {
-            console.log('Error', result);
-            alert(JSON.stringify(result, null, 4));
-        })
-    }, 1000);
+    setTimeout(function() {
+        console.log('2. Trying to show ad...');
+        
+        const controller = window.Adsgram.init({ blockId: "int-25418" });
+        
+        controller.show()
+            .then(function(res) {
+                console.log('3. Success:', res);
+                alert('এড দেখানো হয়েছে!');
+            })
+            .catch(function(err) {
+                console.log('3. Error:', err);
+                alert('এরর কোড: ' + JSON.stringify(err));
+            });
+    }, 2000);
 </script>
     
     <meta charset="UTF-8">
