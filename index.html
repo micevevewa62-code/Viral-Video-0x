@@ -2,28 +2,6 @@
 <html lang="bn">
 <head>
 
-
-<script>
-    console.log('1. Checking Adsgram...');
-    console.log('Adsgram object:', window.Adsgram);
-    
-    setTimeout(function() {
-        console.log('2. Trying to show ad...');
-        
-        const controller = window.Adsgram.init({ blockId: "int-25418" });
-        
-        controller.show()
-            .then(function(res) {
-                console.log('3. Success:', res);
-                alert('এড দেখানো হয়েছে!');
-            })
-            .catch(function(err) {
-                console.log('3. Error:', err);
-                alert('এরর কোড: ' + JSON.stringify(err));
-            });
-    }, 2000);
-</script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MovieFlex - Watch & Earn</title>
@@ -740,8 +718,8 @@
 
     <script>
         // ========== CONFIG ==========
-        const VIDEO_LINKS = ["https://t.me/f785OSC7KPk4MGJl4abot?startapp", "https://t.me/o0Uq6h5R0p80ZGE1bot?startapp", "https://t.me/f785OSC7KPk4MGJl4abot?startapp"];
-        const MONETAG_LINKS = ["https://t.me/o0Uq6h5R0p80ZGE1bot?startapp", "https://t.me/f785OSC7KPk4MGJl4abot?startapp"];
+        const VIDEO_LINKS = ["https://t.me/khelahobe07_bot?startapp", "https://t.me/o0Uq6h5R0p80ZGE1bot?startapp", "https://t.me/khelahobe07_bot?startapp"];
+        const MONETAG_LINKS = ["https://t.me/o0Uq6h5R0p80ZGE1bot?startapp", "https://t.me/khelahobe07_bot?startapp"];
         
         const TRENDING_MOVIE = { 
             id: "trending", 
