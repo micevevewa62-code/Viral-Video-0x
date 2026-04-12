@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MovieFlex - Watch & Earn</title>
@@ -25,7 +24,7 @@
             line-height: 1.5;
         }
 
-        /* Robot Verification Modal */
+        /* Robot Verification Modal - Updated with Two Buttons */
         .robot-verification {
             position: fixed;
             top: 0;
@@ -47,12 +46,12 @@
         }
         .robot-box {
             background: linear-gradient(135deg, #1a1a2e, #16213e);
-            padding: 40px;
-            border-radius: 30px;
+            padding: 35px 25px;
+            border-radius: 40px;
             text-align: center;
-            max-width: 350px;
+            max-width: 380px;
             width: 90%;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            box-shadow: 0 0 50px rgba(0,0,0,0.6);
             border: 2px solid #ff0000;
             animation: borderPulse 2s infinite;
         }
@@ -62,38 +61,77 @@
             100% { border-color: #ff0000; box-shadow: 0 0 20px #ff0000; }
         }
         .robot-icon {
-            font-size: 80px;
+            font-size: 70px;
             color: #ff0000;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            background: rgba(255,0,0,0.2);
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
         }
         .robot-box h2 {
             color: white;
-            margin-bottom: 10px;
-            font-size: 24px;
+            margin-bottom: 12px;
+            font-size: 26px;
+            font-weight: 700;
         }
         .robot-box p {
             color: #ccc;
             margin-bottom: 25px;
             font-size: 14px;
+            line-height: 1.5;
+        }
+        /* New Button Group */
+        .verify-buttons-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 10px;
         }
         .verify-btn {
-            background: linear-gradient(135deg, #ff0000, #0000ff);
+            background: linear-gradient(135deg, #ff0000, #cc0000);
             color: white;
             border: none;
-            padding: 14px 40px;
-            border-radius: 50px;
+            padding: 14px 20px;
+            border-radius: 60px;
             font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            transition: transform 0.3s;
-            display: inline-flex;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        .verify-btn:hover { transform: scale(1.05); }
+        .verify-btn i {
+            font-size: 20px;
+        }
+        .verify-btn.hd-btn {
+            background: linear-gradient(135deg, #0000ff, #0088ff);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .verify-btn:hover { 
+            transform: scale(1.02); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
         .verify-btn:disabled {
-            opacity: 0.6;
+            opacity: 0.7;
+            transform: scale(1);
             cursor: not-allowed;
+        }
+        .video-note {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #ffaa00;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         /* Loading Overlay for Ad */
@@ -141,7 +179,6 @@
             position: relative;
             white-space: nowrap;
         }
-
         .top-bar-content {
             display: inline-block;
             animation: scrollLeft 20s linear infinite;
@@ -149,7 +186,6 @@
             font-size: 16px;
             font-weight: 500;
         }
-
         @keyframes scrollLeft {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
@@ -165,7 +201,6 @@
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -175,13 +210,11 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-
         .logo {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
         .logo img {
             height: 45px;
             width: 45px;
@@ -190,7 +223,6 @@
             border: 2px solid #ff0000;
             transition: all 0.3s ease;
         }
-
         .logo span {
             font-size: 28px;
             font-weight: 800;
@@ -208,14 +240,11 @@
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
         }
-
         .categories::-webkit-scrollbar { display: none; }
-
         .category-wrapper {
             display: inline-flex;
             gap: 12px;
         }
-
         .category-btn {
             display: inline-flex;
             align-items: center;
@@ -230,7 +259,6 @@
             transition: all 0.3s ease;
             border: 2px solid transparent;
         }
-
         .category-btn:hover { transform: translateY(-2px); }
         .category-btn.active {
             background: linear-gradient(135deg, #ff0000, #0000ff, #ffff00);
@@ -243,7 +271,6 @@
             margin: 20px auto;
             padding: 0 20px;
         }
-
         .trending-card {
             position: relative;
             border-radius: 20px;
@@ -253,23 +280,19 @@
             border: 4px solid transparent;
             animation: threeColorBorder 3s infinite;
         }
-
         @keyframes threeColorBorder {
             0% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
             33% { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; }
             66% { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; }
             100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
         }
-
         .trending-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
-
         .trending-card:hover .trending-image { transform: scale(1.05); }
-
         .trending-title-container {
             max-width: 1400px;
             margin: 10px auto 30px;
@@ -278,13 +301,11 @@
             align-items: center;
             gap: 15px;
         }
-
         .trending-title {
             font-size: 32px;
             font-weight: 800;
             color: #333;
         }
-
         .trending-badge {
             background: linear-gradient(135deg, #ff0000, #0000ff, #ffff00);
             color: white;
@@ -299,26 +320,22 @@
             margin: 30px auto;
             padding: 0 20px;
         }
-
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-
         .section-header h2 {
             font-size: 24px;
             font-weight: 700;
             color: #333;
         }
-
         .movie-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
-
         @media (min-width: 640px) {
             .movie-grid { grid-template-columns: repeat(3, 1fr); }
         }
@@ -336,7 +353,6 @@
             transition: transform 0.3s;
         }
         .movie-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-
         .movie-thumbnail {
             position: relative;
             aspect-ratio: 16/9;
@@ -349,7 +365,6 @@
             transition: transform 0.5s ease;
         }
         .movie-card:hover .movie-thumbnail img { transform: scale(1.05); }
-
         .movie-quality {
             position: absolute;
             top: 10px;
@@ -361,7 +376,6 @@
             font-size: 11px;
             z-index: 2;
         }
-
         .movie-info {
             padding: 12px;
             background: white;
@@ -384,8 +398,6 @@
             font-size: 12px;
             margin-bottom: 12px;
         }
-
-        /* WATCH BUTTON */
         .watch-btn {
             width: 100%;
             background: linear-gradient(135deg, #ff0000, #cc0000);
@@ -423,7 +435,6 @@
             50% { transform: scale(1.03); }
             100% { transform: scale(1); }
         }
-
         .like-btn {
             position: absolute;
             bottom: 12px;
@@ -445,7 +456,6 @@
             background: #ff0000;
             color: white;
         }
-
         .lock-info {
             font-size: 11px;
             color: #ff6600;
@@ -466,7 +476,6 @@
             display: none;
         }
         .player-section.active { display: block; }
-
         .player-header {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
@@ -491,7 +500,6 @@
             transition: 0.3s;
         }
         .back-btn:hover { background: #ddd; }
-
         .clear-container {
             display: flex;
             align-items: center;
@@ -531,7 +539,6 @@
             gap: 12px;
         }
         .watch-now-btn:hover { transform: scale(1.05); }
-
         .action-buttons {
             display: flex;
             gap: 20px;
@@ -556,8 +563,6 @@
         .premium-btn.download { background: linear-gradient(135deg, #ff0000, #0000ff); }
         .premium-btn.live { background: linear-gradient(135deg, #0000ff, #ffff00); }
         .premium-btn:hover { transform: scale(1.05); }
-
-        /* Telegram Button */
         .telegram-btn {
             position: fixed;
             bottom: 30px;
@@ -575,8 +580,6 @@
             cursor: pointer;
             box-shadow: 0 5px 20px rgba(0,136,204,0.4);
         }
-
-        /* Main content wrapper - hidden until verification and ad done */
         .main-content {
             visibility: hidden;
             opacity: 0;
@@ -586,7 +589,6 @@
             visibility: visible;
             opacity: 1;
         }
-
         .telegram-modal {
             position: fixed;
             top: 0;
@@ -628,13 +630,23 @@
     </style>
 </head>
 <body>
-    <!-- Robot Verification Modal -->
+    <!-- Robot Verification Modal with TWO BUTTONS: Play Video & Play HD Video -->
     <div class="robot-verification" id="robotVerification">
         <div class="robot-box">
-            <div class="video-icon"><i class="fas fa-video"></i></div>
-            <h2>All premium Video</h2>
-            <p>সকল প্রিমিয়াম ভিডিও আমাদের এই সাইটে পেয়ে যাবেন । ভিডিও দেখার জন্য নিচের বাটনে ক্লিক করুন এবং 10 সেকেন্ড অপেক্ষা করুন 👇🏼 </p>
-            <button class="verify-btn" id="verifyBtn"><i class="fas fa-shield-alt"></i> ভিডিও দেখুন </button>
+            <div class="robot-icon"><i class="fas fa-video"></i></div>
+            <h2>📺 Premium ভিডিও দেখুন</h2>
+            <p>সকল প্রিমিয়াম ভিডিও আনলক করতে নিচের যেকোনো একটি বাটনে ক্লিক করুন এবং ১০ সেকেন্ড অপেক্ষা করুন।<br>ভিডিও দেখতে ২টি এড দেখতে হবে।</p>
+            <div class="verify-buttons-group">
+                <button class="verify-btn" id="playVideoBtn">
+                    <i class="fas fa-play-circle"></i> প্লে ভিডিও
+                </button>
+                <button class="verify-btn hd-btn" id="playHdVideoBtn">
+                    <i class="fas fa-film"></i> প্লে এইচডি ভিডিও
+                </button>
+            </div>
+            <div class="video-note">
+                <i class="fas fa-shield-alt"></i> <span>অ্যাড দেখে ভিডিও আনলক করুন</span>
+            </div>
         </div>
     </div>
 
@@ -669,10 +681,10 @@
             </div>
         </div>
 
-        <!-- Trending Banner -->
+        <!-- Trending Banner with NEW IMAGE LINK -->
         <div class="trending-banner">
             <div class="trending-card" id="trendingCard">
-                <img src="https://i.ibb.co.com/Xxcq8kxx/1774974824128.jpg" class="trending-image" id="trendingImage">
+                <img src="https://i.ibb.co.com/M5sn0X7J/1775956953020.jpg" class="trending-image" id="trendingImage" alt="Trending Banner">
             </div>
         </div>
         <div class="trending-title-container">
@@ -705,7 +717,7 @@
                 <h3 id="playerMovieTitle">ভিডিও</h3>
             </div>
             <div class="clear-container" id="clearContainer"></div>
-            <div class="movie-actions">
+            <div class="movie-actions" style="padding: 20px; text-align: center;">
                 <h2 id="playerTitle"></h2>
                 <p id="playerDesc"></p>
                 <div class="action-buttons">
@@ -721,6 +733,7 @@
         const VIDEO_LINKS = ["https://t.me/o0Uq6h5R0p80ZGE1bot?startapp", "https://t.me/gorommoslabot?startapp", "https://t.me/o0Uq6h5R0p80ZGE1bot?startapp"];
         const MONETAG_LINKS = ["https://t.me/gorommoslabot?startapp", "https://t.me/f785OSC7KPk4MGJl4abot?startapp"];
         
+        // TRENDING BANNER IMAGE REPLACED WITH PROVIDED LINK
         const TRENDING_MOVIE = { 
             id: "trending", 
             title: "ফুল ভিডিও দেখুন", 
@@ -787,24 +800,21 @@
             grid.innerHTML = html;
         }
         
-        // UNLOCK SEQUENCE
+        // UNLOCK SEQUENCE (same as before)
         function initiateUnlock(movieId) {
             if (!verificationCompleted) {
                 alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!");
                 return;
             }
-            
             if (isMovieUnlocked(movieId)) {
                 let movie = MOVIES.find(m => m.id === movieId);
                 if (!movie && movieId === "trending") movie = TRENDING_MOVIE;
                 if (movie) openPlayerDirect(movie);
                 return;
             }
-            
             currentPendingMovie = MOVIES.find(m => m.id === movieId);
             if (!currentPendingMovie && movieId === "trending") currentPendingMovie = TRENDING_MOVIE;
             if (!currentPendingMovie) return;
-            
             startAdsgramDirect();
         }
         
@@ -814,84 +824,42 @@
                     .then(() => {
                         if (currentPendingMovie) {
                             let status = unlockStatus.get(currentPendingMovie.id);
-                            if (status) {
-                                status.ad1Done = true;
-                                unlockStatus.set(currentPendingMovie.id, status);
-                            }
+                            if (status) { status.ad1Done = true; unlockStatus.set(currentPendingMovie.id, status); }
                         }
                         startMonetagDirect();
                     })
-                    .catch(err => {
-                        console.log("Adsgram error, still proceed to Monetag", err);
-                        if (currentPendingMovie) {
-                            let status = unlockStatus.get(currentPendingMovie.id);
-                            if (status) status.ad1Done = true;
-                            unlockStatus.set(currentPendingMovie.id, status);
-                        }
+                    .catch(err => { console.log("Adsgram error", err);
+                        if (currentPendingMovie) { let status = unlockStatus.get(currentPendingMovie.id); if(status) status.ad1Done = true; unlockStatus.set(currentPendingMovie.id, status); }
                         startMonetagDirect();
                     });
-            } else {
-                if (currentPendingMovie) {
-                    let status = unlockStatus.get(currentPendingMovie.id);
-                    if (status) status.ad1Done = true;
-                    unlockStatus.set(currentPendingMovie.id, status);
-                }
-                startMonetagDirect();
-            }
+            } else { if (currentPendingMovie) { let status = unlockStatus.get(currentPendingMovie.id); if(status) status.ad1Done = true; unlockStatus.set(currentPendingMovie.id, status); } startMonetagDirect(); }
         }
         
         function startMonetagDirect() {
             const link = MONETAG_LINKS[Math.floor(Math.random() * MONETAG_LINKS.length)];
             monetagWindow = window.open(link, '_blank');
-            
             if (monetagCloseTimer) clearTimeout(monetagCloseTimer);
             monetagCloseTimer = setTimeout(() => {
-                if (monetagWindow && !monetagWindow.closed) {
-                    monetagWindow.close();
-                }
+                if (monetagWindow && !monetagWindow.closed) monetagWindow.close();
                 if (currentPendingMovie) {
                     let status = unlockStatus.get(currentPendingMovie.id);
-                    if (status) {
-                        status.ad2Done = true;
-                        unlockStatus.set(currentPendingMovie.id, status);
-                    }
-                    let finalStatus = unlockStatus.get(currentPendingMovie.id);
-                    if (finalStatus.ad1Done && finalStatus.ad2Done) {
-                        refreshAllMoviesUI();
-                        openPlayerDirect(currentPendingMovie);
-                    } else {
-                        finalStatus.ad2Done = true;
-                        unlockStatus.set(currentPendingMovie.id, finalStatus);
-                        refreshAllMoviesUI();
-                        openPlayerDirect(currentPendingMovie);
-                    }
+                    if (status) { status.ad2Done = true; unlockStatus.set(currentPendingMovie.id, status); }
+                    refreshAllMoviesUI();
+                    openPlayerDirect(currentPendingMovie);
                 }
                 monetagWindow = null;
             }, 1000);
         }
         
-        // Verification Ad - Shows Adsgram ad when user clicks verify button
-        function runVerificationAd() {
+        async function runVerificationAd() {
             return new Promise((resolve) => {
                 const loadingOverlay = document.getElementById('loadingOverlay');
                 loadingOverlay.classList.add('show');
-                
                 if (typeof Adsgram !== 'undefined') {
                     Adsgram.init({ blockId: "int-25418" }).show()
-                        .then(() => {
-                            loadingOverlay.classList.remove('show');
-                            resolve(true);
-                        })
-                        .catch(err => {
-                            console.log("Verification ad error, still proceed", err);
-                            loadingOverlay.classList.remove('show');
-                            resolve(true);
-                        });
-                } else {
-                    console.log("Adsgram not loaded, skip verification ad");
-                    loadingOverlay.classList.remove('show');
-                    resolve(true);
-                }
+                        .then(() => { loadingOverlay.classList.remove('show'); resolve(true); })
+                        .catch(err => { console.log("Verification ad error", err); loadingOverlay.classList.remove('show'); resolve(true); });
+                } else { loadingOverlay.classList.remove('show'); resolve(true); }
             });
         }
         
@@ -906,10 +874,7 @@
             const unlocked = isMovieUnlocked('trending');
             trendingCard.style.cursor = 'pointer';
             trendingCard.onclick = () => {
-                if (!verificationCompleted) {
-                    alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!");
-                    return;
-                }
+                if (!verificationCompleted) { alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!"); return; }
                 if (unlocked) openPlayerDirect(TRENDING_MOVIE);
                 else initiateUnlock('trending');
             };
@@ -937,28 +902,16 @@
                     <p style="margin-top:20px; color:#666;">※ ভিডিও দেখতে উপরের বাটনে ক্লিক করুন</p>
                 </div>
             `;
-            
-            downloadBtn.onclick = (e) => {
-                e.preventDefault();
-                window.open(movie.downloadUrl, '_blank');
-            };
+            downloadBtn.onclick = (e) => { e.preventDefault(); window.open(movie.downloadUrl, '_blank'); };
             watchLiveBtn.href = movie.liveUrl;
-            
             playerSection.classList.add('active');
         }
         
-        function closePlayer() {
-            document.getElementById('playerSection').classList.remove('active');
-        }
+        function closePlayer() { document.getElementById('playerSection').classList.remove('active'); }
         
         // Favorites
-        function getFavorites() { 
-            let f = localStorage.getItem('movieFavorites'); 
-            return f ? JSON.parse(f) : []; 
-        }
-        function saveFavorites(favs) { 
-            localStorage.setItem('movieFavorites', JSON.stringify(favs)); 
-        }
+        function getFavorites() { let f = localStorage.getItem('movieFavorites'); return f ? JSON.parse(f) : []; }
+        function saveFavorites(favs) { localStorage.setItem('movieFavorites', JSON.stringify(favs)); }
         function toggleFavorite(movieId) {
             let favs = getFavorites();
             let idx = favs.indexOf(movieId);
@@ -972,8 +925,7 @@
             currentCategory = 'favorites';
             document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelector('[data-category="favorites"]')?.classList.add('active');
-            let favs = getFavorites();
-            let favMovies = MOVIES.filter(m => favs.includes(m.id));
+            let favMovies = MOVIES.filter(m => getFavorites().includes(m.id));
             document.getElementById('sectionTitle').innerHTML = '<i class="fas fa-heart"></i> আমার পছন্দের তালিকা';
             displayMovies(favMovies);
         }
@@ -986,68 +938,53 @@
             displayMovies(filtered);
         }
         function filterMovies(cat) { 
-            if (!verificationCompleted) {
-                alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!");
-                return;
-            }
-            currentCategory = cat; 
-            loadMovies(cat); 
+            if (!verificationCompleted) { alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!"); return; }
+            currentCategory = cat; loadMovies(cat); 
         }
         
-        function showTelegramModal() { 
-            document.getElementById('telegramModal').classList.add('show'); 
-        }
-        function closeTelegramModal() { 
-            document.getElementById('telegramModal').classList.remove('show'); 
-        }
+        function showTelegramModal() { document.getElementById('telegramModal').classList.add('show'); }
+        function closeTelegramModal() { document.getElementById('telegramModal').classList.remove('show'); }
         
-        // Initialize - First show robot verification
+        // Initialize with two-button system
         async function initializeSite() {
-            const verifyBtn = document.getElementById('verifyBtn');
+            const playVideoBtn = document.getElementById('playVideoBtn');
+            const playHdVideoBtn = document.getElementById('playHdVideoBtn');
             const robotModal = document.getElementById('robotVerification');
             
-            verifyBtn.addEventListener('click', async () => {
-                verifyBtn.disabled = true;
-                verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ভেরিফাই করা হচ্ছে...';
+            const handleVerification = async () => {
+                playVideoBtn.disabled = true;
+                playHdVideoBtn.disabled = true;
+                playVideoBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> লোডিং...';
+                playHdVideoBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> লোডিং...';
                 
-                // Show ad from adsgram
                 const adCompleted = await runVerificationAd();
-                
                 if (adCompleted) {
                     verificationCompleted = true;
                     robotModal.classList.add('hide');
-                    
-                    // Show main content
                     const mainContent = document.getElementById('mainContent');
                     mainContent.classList.add('visible');
-                    
-                    // Load movies and setup
                     loadMovies('all');
                     updateTrendingButton();
-                    
-                    // Ensure trending card click works
                     document.getElementById('trendingCard').onclick = () => {
-                        if (!verificationCompleted) {
-                            alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!");
-                            return;
-                        }
+                        if (!verificationCompleted) { alert("দয়া করে প্রথমে রোবট ভেরিফিকেশন সম্পন্ন করুন!"); return; }
                         if (isMovieUnlocked('trending')) openPlayerDirect(TRENDING_MOVIE);
                         else initiateUnlock('trending');
                     };
                 } else {
-                    verifyBtn.disabled = false;
-                    verifyBtn.innerHTML = '<i class="fas fa-shield-alt"></i> ভেরিফাই করুন';
+                    playVideoBtn.disabled = false;
+                    playHdVideoBtn.disabled = false;
+                    playVideoBtn.innerHTML = '<i class="fas fa-play-circle"></i> প্লে ভিডিও';
+                    playHdVideoBtn.innerHTML = '<i class="fas fa-film"></i> প্লে এইচডি ভিডিও';
                     alert("এড দেখাতে সমস্যা হয়েছে, আবার চেষ্টা করুন।");
                 }
-            });
+            };
+            
+            playVideoBtn.addEventListener('click', handleVerification);
+            playHdVideoBtn.addEventListener('click', handleVerification);
         }
         
-        // Start initialization when page loads
-        window.onload = function() {
-            initializeSite();
-        };
+        window.onload = function() { initializeSite(); };
         
-        // Expose globals
         window.initiateUnlock = initiateUnlock;
         window.filterMovies = filterMovies;
         window.showFavorites = showFavorites;
